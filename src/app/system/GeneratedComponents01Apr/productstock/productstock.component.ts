@@ -94,7 +94,7 @@ export class ProductStockComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product stock - Elhelali");
+    this.titleService.setTitle("Product stock - Pablo");
       this.refreshMe();
   }
 

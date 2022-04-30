@@ -98,7 +98,7 @@ export class CompanyBankBranchComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Bank branch - Elhelali");
+    this.titleService.setTitle("Bank branch - Pablo");
       this.refreshMe();
   }
 

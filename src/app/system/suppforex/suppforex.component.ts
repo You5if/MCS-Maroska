@@ -94,7 +94,7 @@ export class SuppForexComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Purchase forex - Elhelali");
+    this.titleService.setTitle("Purchase forex - Pablo");
       this.refreshMe();
   }
 

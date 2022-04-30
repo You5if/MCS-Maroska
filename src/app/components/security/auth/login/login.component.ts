@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle("Elhelali - Login");
+    this.titleService.setTitle("Pablo - Login");
     // this.googleImagePath = this._globals.baseAPIFileUrl+'/resources/images/btn_google_signin_light_normal_web.png';
     this.valUserObject = {
       username: '',
@@ -207,7 +207,7 @@ this.companyObject = {
               this._msg.showError(result.errorMessage);
               return false;
           }
-      }, error => {
+      }, (error:any) => {
           this._ui.loadingStateChanged.next(false);
           this._msg.showAPIError(error);
           return false;
@@ -230,6 +230,7 @@ this.companyObject = {
       this.loging = false
       return false;
     }
+    this._ui.loadingStateChanged.next(true);
     this._signupService.validateUserName(form.value).subscribe((result: SelectModel[]) => {
       console.log(form.value);
       
@@ -241,34 +242,34 @@ this.companyObject = {
               if (data !== null) {
                 localStorage.setItem('sdCompanyId', data.companyId.toString());
                 this.router.navigate(['/System']);
-                this.loging = false
+                this._ui.loadingStateChanged.next(false);
                 return true;
               } else {
 
-                this.loging = false
+                this._ui.loadingStateChanged.next(false);
                 this._msg.showInfo("Error!!", "wrong username or password");
                 // this._msg.showError('Unable to login!');
               }
             }, error => {
-              this.loging = false
+              this._ui.loadingStateChanged.next(false);
               this._msg.showInfo("Error!!", "wrong username or password");
               // this._msg.showAPIError(error);
               return false;
             });
 
-          } catch (error:any) {
-            this.loging = false
+          } catch (error) {
+            this._ui.loadingStateChanged.next(false);
             this._msg.showInfo("Error!!", "wrong username or password");
             // this._msg.showAPIError(error);
             return false;
           }
         }
         else {
-          this.loging = false
+          this._ui.loadingStateChanged.next(false);
           this.router.navigate(['/googlelogin']);
         }
       }else {
-        this.loging = false
+        this._ui.loadingStateChanged.next(false);
         this._msg.showInfo("Error!!", "wrong username or password");
       }
     });

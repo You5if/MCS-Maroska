@@ -54,7 +54,7 @@ export class InventoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Inventory reports - Elhelali");
+    this.titleService.setTitle("Inventory reports - Pablo");
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header1 = "Stock reports"

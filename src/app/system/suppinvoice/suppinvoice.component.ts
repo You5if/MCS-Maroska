@@ -107,7 +107,7 @@ export class SuppInvoiceComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Purchase invoice - Elhelali");
+    this.titleService.setTitle("Purchase invoice - Pablo");
       this.refreshMe();
   }
 

@@ -97,7 +97,7 @@ export class CustomerComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Customer - Elhelali");
+    this.titleService.setTitle("Customer - Pablo");
       this.refreshMe();
   }
 

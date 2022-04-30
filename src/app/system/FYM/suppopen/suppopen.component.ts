@@ -85,7 +85,7 @@ export class SuppOpenComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Supplier opening balance - Elhelali");
+    this.titleService.setTitle("Supplier opening balance - Pablo");
       this.refreshMe();
   }
 

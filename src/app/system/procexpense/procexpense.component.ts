@@ -94,7 +94,7 @@ export class ProcExpenseComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Procurement expenses list - Elhelali");
+    this.titleService.setTitle("Procurement expenses list - Pablo");
       this.refreshMe();
   }
 

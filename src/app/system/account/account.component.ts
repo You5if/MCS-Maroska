@@ -97,7 +97,7 @@ export class AccountComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Account - Elhelali");
+    this.titleService.setTitle("Account - Pablo");
       this.refreshMe();
   }
 

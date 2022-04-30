@@ -24,9 +24,9 @@ export class AppGlobals {
   //   readonly baseAPIRootUrl: string = 'https://localhost:44377/api/';
 
   /* Development Server */
-  readonly baseAPIFileUrl: string = "http://hilalierpapi.autopay-mcs.com/";
-  readonly baseAPIUrl: string = "http://hilalierpapi.autopay-mcs.com/api/";
-  readonly baseAPIRootUrl: string = "http://hilalierpapi.autopay-mcs.com/api/";
+  readonly baseAPIFileUrl: string = "http://pabloapi.autopay-mcs.com/";
+  readonly baseAPIUrl: string = "http://pabloapi.autopay-mcs.com/api/";
+  readonly baseAPIRootUrl: string = "http://pabloapi.autopay-mcs.com/api/";
 
   /* Live Server */
   // readonly baseAPIFileUrl: string = "https://appapi.aladdinshipping.com/";
@@ -35,8 +35,8 @@ export class AppGlobals {
 
   /* Development Server */
   // readonly baseReportUrl: string = 'http://shippingreports.autopay-mcs.com/default.aspx?';
-  readonly baseReportUrl: string = 'http://hilalierpreports.autopay-mcs.com/default.aspx?';
-  readonly baseReportEmailUrl: string = 'http://shippingreports.autopay-mcs.com/default2.aspx?';
+  readonly baseReportUrl: string = 'http://pabloapi.autopay-mcs.com/default.aspx?';
+  readonly baseReportEmailUrl: string = 'http://pabloapi.autopay-mcs.com/default2.aspx?';
 
   /* Live Server */
   // readonly baseReportUrl: string =

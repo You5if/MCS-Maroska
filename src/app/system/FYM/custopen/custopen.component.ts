@@ -85,7 +85,7 @@ export class CustOpenComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Customer opening balance - Elhelali");
+    this.titleService.setTitle("Customer opening balance - Pablo");
       this.refreshMe();
   }
 

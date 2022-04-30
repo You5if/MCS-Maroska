@@ -99,7 +99,7 @@ export class SuppInvProcComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Procurement expenses - Elhelali");
+    this.titleService.setTitle("Procurement expenses - Pablo");
       this.refreshMe();
   }
 

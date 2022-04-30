@@ -86,7 +86,7 @@ export class AccountOpenComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Account opening balance - Elhelali");
+    this.titleService.setTitle("Account opening balance - Pablo");
       this.refreshMe();
   }
 

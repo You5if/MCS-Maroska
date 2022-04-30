@@ -35,30 +35,30 @@
         
         <li (click)="onClickListItem('BP')" fxHide class="side_list_item"><mat-icon>person</mat-icon><div class="title"> {{businessP}}</div></li>
         <mat-divider></mat-divider>
-        <div *ngIf="role === '3' || role === '2' || role === '9'" class="main_title">
+        <!-- <div *ngIf="role === '3' || role === '2' || role === '9'" class="main_title">
           <span class="fon">{{accounting}}</span>
         </div>
-        <mat-divider *ngIf="role === '3' || role === '2' || role === '9'"></mat-divider>
+        <mat-divider *ngIf="role === '3' || role === '2' || role === '9'"></mat-divider> -->
         <!-- <li (click)="onClickListItem('ECharts')" class="side_list_item active"><mat-icon>home</mat-icon><div class="title"> E-Charts</div></li> -->
         <!-- <li (click)="onClickListItem('Charts')" class="side_list_item active"><mat-icon>home</mat-icon><div class="title"> Charts</div></li> -->
-        <li *ngIf="role === '3' || role === '2'" (click)="onClickListItem('J')" class="side_list_item"><mat-icon>library_books</mat-icon><div class="title"> {{journal}}</div></li>
+        <!-- <li *ngIf="role === '3' || role === '2'" (click)="onClickListItem('J')" class="side_list_item"><mat-icon>library_books</mat-icon><div class="title"> {{journal}}</div></li> -->
         <!-- <li (click)="onClickListItem('JD')" class="side_list_item"><mat-icon>library_books</mat-icon><div class="title"> Journal Dynamic</div></li> -->
-        <li *ngIf="role === '3' || role === '2' || role === '9'" (click)="onClickListItem('E')" class="side_list_item"><mat-icon> local_atm</mat-icon><div class="title"> {{expense}}</div></li>
+        <!-- <li *ngIf="role === '3' || role === '2' || role === '9'" (click)="onClickListItem('E')" class="side_list_item"><mat-icon> local_atm</mat-icon><div class="title"> {{expense}}</div></li> -->
         
         <!-- <li (click)="onClickListItem('ED')" class="side_list_item"><mat-icon> local_atm</mat-icon><div class="title">Expense Dynamic</div></li> -->
         
-        <mat-divider *ngIf="role === '4' || role === '2'"></mat-divider>
-        <div *ngIf="role === '4' || role === '2'" class="main_title">
+        <!-- <mat-divider *ngIf="role === '4' || role === '2'"></mat-divider> -->
+        <!-- <div *ngIf="role === '4' || role === '2'" class="main_title">
           <h3 class="fon">{{config}}</h3>
-        </div>
-        <mat-divider *ngIf="role === '4' || role === '2'"></mat-divider>
+        </div> -->
+        <!-- <mat-divider *ngIf="role === '4' || role === '2'"></mat-divider> -->
         <!-- <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('T')" class="side_list_item"><mat-icon>receipt</mat-icon><div class="title"> {{tax}}</div></li> -->
-        <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('F')" class="side_list_item"><mat-icon> attach_money</mat-icon><div class="title"> {{forex}}</div></li>
+        <!-- <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('F')" class="side_list_item"><mat-icon> attach_money</mat-icon><div class="title"> {{forex}}</div></li>
         <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('A')" class="side_list_item"><mat-icon>account_box</mat-icon><div class="title"> {{account}}</div></li>
         <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('AC')" class="side_list_item"><mat-icon> vpn_key</mat-icon><div class="title">{{accountConfiguration}}</div></li>
         <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('B')" class="side_list_item"><mat-icon>account_balance</mat-icon><div class="title">{{bank}}</div></li>
         <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('BB')" class="side_list_item"><mat-icon>account_balance</mat-icon><div class="title">{{bankBranch}}</div></li>
-        <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('BA')" class="side_list_item"><mat-icon> account_balance</mat-icon><div class="title">{{bankAccount}}</div></li>
+        <li *ngIf="role === '4' || role === '2'" (click)="onClickListItem('BA')" class="side_list_item"><mat-icon> account_balance</mat-icon><div class="title">{{bankAccount}}</div></li> -->
         <mat-divider *ngIf="role === '5' || role === '2'"></mat-divider>
         <div *ngIf="role === '5' || role === '2' || role === '9' || role === '10'" class="main_title">
           <h3 class="fon">{{sales}}</h3>
@@ -69,9 +69,9 @@
         <li *ngIf="role === '5' || role === '2' || role === '9' || role === '10'" (click)="onClickListItem('I')" class="side_list_item"><mat-icon>description</mat-icon><div class="title">{{invoice}}</div></li>
   
         <li *ngIf="role === '5' || role === '2' || role === '9'" (click)="onClickListItem('PTC')" class="side_list_item"><i class="fas fa-money-bill-wave"></i><div class="title">{{paymentToCompany}}</div></li>
-        <li *ngIf="role === '5' || role === '2' || role === '9'" (click)="onClickListItem('PFC')" class="side_list_item"><i class="fas fa-money-bill-wave"></i><div class="title">{{paymentFromCompany}}</div></li>
-        <li *ngIf="role === '5' || role === '2'" (click)="onClickListItem('CTC')" class="side_list_item"><i class="fas fa-money-check-alt"></i><div class="title">{{cheque}}</div></li>
-        <li *ngIf="role === '5' || role === '2'" (click)="onClickListItem('CTC2')" class="side_list_item"><i class="fas fa-money-check-alt"></i><div class="title">{{cheque2}}</div></li>
+        <!--   <li *ngIf="role === '5' || role === '2' || role === '9'" (click)="onClickListItem('PFC')" class="side_list_item"><i class="fas fa-money-bill-wave"></i><div class="title">{{paymentFromCompany}}</div></li> -->
+        <!-- <li *ngIf="role === '5' || role === '2'" (click)="onClickListItem('CTC')" class="side_list_item"><i class="fas fa-money-check-alt"></i><div class="title">{{cheque}}</div></li> -->
+        <!-- <li *ngIf="role === '5' || role === '2'" (click)="onClickListItem('CTC2')" class="side_list_item"><i class="fas fa-money-check-alt"></i><div class="title">{{cheque2}}</div></li> -->
         <mat-divider *ngIf="role === '6' || role === '2'"></mat-divider>
         <div *ngIf="role === '6' || role === '2' || role === '11'" class="main_title">
           <h3 class="fon">{{inventory}}</h3>
@@ -87,13 +87,13 @@
         <li *ngIf="role === '6' || role === '2'" (click)="onClickListItem('W')" class="side_list_item"><i class="fas fa-warehouse"></i><div class="title">{{warehouse}}</div></li>
         <li *ngIf="role === '6' || role === '2'" (click)="onClickListItem('SI')" class="side_list_item"><mat-icon>add_shopping_cart</mat-icon><div class="title">{{stockIn}}</div></li>
         <li *ngIf="role === '6' || role === '2' || role === '11'" (click)="onClickListItem('SM')" class="side_list_item"><mat-icon>remove_shopping_cart</mat-icon><div class="title">{{stockMovement}}</div></li>
-        <mat-divider *ngIf="role === '8' || role === '2'"></mat-divider>
+        <!-- <mat-divider *ngIf="role === '8' || role === '2'"></mat-divider>
         <div *ngIf="role === '8' || role === '2'" class="main_title">
           <span class="fon">{{purchase}}</span>
         </div>
-        <mat-divider *ngIf="role === '8' || role === '2'"></mat-divider>
+        <mat-divider *ngIf="role === '8' || role === '2'"></mat-divider> -->
         <!-- <li (click)="onClickListItem('ECharts')" class="side_list_item active"><mat-icon>home</mat-icon><div class="title"> E-Charts</div></li> -->
-        <li *ngIf="role === '8' || role === '2'" (click)="onClickListItem('SUB')" class="side_list_item"><mat-icon>home</mat-icon><div class="title"> {{supplier}}</div></li>
+        <!-- <li *ngIf="role === '8' || role === '2'" (click)="onClickListItem('SUB')" class="side_list_item"><mat-icon>home</mat-icon><div class="title"> {{supplier}}</div></li>
         <li *ngIf="role === '3' || role === '2'" (click)="onClickListItem('PFC')" class="side_list_item"><i class="fas fa-money-bill-wave"></i><div class="title">{{paymentFromCompany}}</div></li>
         <li *ngIf="role === '8' || role === '2'" (click)="onClickListItem('SF')" class="side_list_item"><mat-icon>home</mat-icon><div class="title"> {{suppForex}}</div></li>
         <li *ngIf="role === '8' || role === '2'" (click)="onClickListItem('PEX')" class="side_list_item"><mat-icon>home</mat-icon><div class="title"> {{proExpense}}</div></li>
@@ -108,9 +108,9 @@
         <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('FR')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{financialReports}}</div></li>
         <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('SR')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{salesReports}}</div></li>
         <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('PR')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{purchaseReports}}</div></li>
-        <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('IR')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{inventoryReports}}</div></li>
+        <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('IR')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{inventoryReports}}</div></li> -->
         <!-- <li (click)="onSignOut()" class="side_list_item"><mat-icon>keyboard_return</mat-icon><div class="title"> {{logout}}</div></li> -->
-        <mat-divider *ngIf="role === '7' || role === '2'"></mat-divider>
+        <!-- <mat-divider *ngIf="role === '7' || role === '2'"></mat-divider>
         <div *ngIf="role === '7' || role === '2'" class="main_title">
           <h3 class="fon">{{fym}}</h3>
         </div>
@@ -119,7 +119,7 @@
         <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('AO')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{accountOpen}}</div></li>
         <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('SO')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{StockOpen}}</div></li>
         <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('CO')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{CustOpen}}</div></li>
-        <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('SUO')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{SuppOpen}}</div></li>
+        <li *ngIf="role === '7' || role === '2'" (click)="onClickListItem('SUO')" class="side_list_item"><i class="fas fa-print"></i><div class="title">{{SuppOpen}}</div></li> -->
       </ul>
     </div>
 

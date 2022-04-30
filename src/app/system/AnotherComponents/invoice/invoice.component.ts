@@ -123,7 +123,7 @@ export class InvoiceComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Invoice - Elhelali");
+    this.titleService.setTitle("Invoice - Pablo");
     this.pageData = {
       tableId: this.pTableId,
       userId: 26,

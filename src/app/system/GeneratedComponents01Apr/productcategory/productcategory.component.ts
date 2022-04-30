@@ -97,7 +97,7 @@ export class ProductCategoryComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product category - Elhelali");
+    this.titleService.setTitle("Product category - Pablo");
       this.refreshMe();
   }
 

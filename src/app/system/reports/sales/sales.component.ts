@@ -54,7 +54,7 @@ export class SalesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Sales reports - Elhelali");
+    this.titleService.setTitle("Sales reports - Pablo");
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header1 = "Customer reports"

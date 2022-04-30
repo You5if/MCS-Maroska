@@ -54,7 +54,7 @@ export class PurchaseComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Purchase reports - Elhelali");
+    this.titleService.setTitle("Purchase reports - Pablo");
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header1 = "Suppliers reports"

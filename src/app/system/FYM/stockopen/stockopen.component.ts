@@ -85,7 +85,7 @@ export class StockOpenComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Stock opening - Elhelali");
+    this.titleService.setTitle("Stock opening - Pablo");
       this.refreshMe();
   }
 

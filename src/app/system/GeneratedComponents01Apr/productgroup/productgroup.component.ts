@@ -103,7 +103,7 @@ export class ProductGroupComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product group - Elhelali");
+    this.titleService.setTitle("Product group - Pablo");
       this.refreshMe();
   }
 

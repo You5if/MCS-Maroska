@@ -108,7 +108,7 @@ export class PaymentFromCompanyComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Payment to supplier - Elhelali");
+    this.titleService.setTitle("Payment to supplier - Pablo");
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header = "Payment to supplier"

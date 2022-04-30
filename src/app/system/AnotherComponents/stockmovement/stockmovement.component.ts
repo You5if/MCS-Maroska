@@ -100,7 +100,7 @@ export class StockMovementComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Stock movement - Elhelali");
+    this.titleService.setTitle("Stock movement - Pablo");
       this.refreshMe();
   }
 

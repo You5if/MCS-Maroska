@@ -1,37 +1,30 @@
 <div class="log">
-  <section class="section"   #loginForm>
-    <mat-card class="card" >
-      <div fxHide.xs class="img_container">
-        <img class="img" loading="lazy" src="../../../../../assets/images/svg/DSC04067-44.jpg" alt="">
+  <section   #loginForm>
+    <mat-card>
+      <div class="img_container fade-in">
+        <img class="img" src="../../../../../assets/images/svg/pablo.jpg" alt="">
       </div>
-      <div class="form">
-        <mat-progress-bar *ngIf="loging" class="progress" mode="indeterminate"></mat-progress-bar>
-        <img class="hilali-logo" src="../../../../../assets/images/svg/Alhilali_Logo without text.png" alt="">
-        <h1 class="welcome">Welcome</h1>
-      <form #f="ngForm"  class="formC" (ngSubmit)="submit(f)">
+      <h1>Login</h1>
+      <form #f="ngForm"  (ngSubmit)="submit(f)">
         <div> 
-          <mat-form-field class="formI"  appearance="outline">
+          <mat-form-field  appearance="outline">
             <mat-label>User name</mat-label>
-            <input class="in" autofocus="off" [disabled]="loging" matInput placeholder="Your email" type="text" email  maxlength="255" #emailInput="ngModel" (ngModel)="pModel.username" name="username">
-            
+            <input matInput placeholder="Your email" type="email" email required maxlength="255" #emailInput="ngModel" (ngModel)="pModel.username" name="username">
+            <mat-error *ngIf="emailInput.hasError('required')">Email cannot be blank!</mat-error>
+            <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid!</mat-error>
           </mat-form-field>
         </div>
     
         <div>
-          <mat-form-field class="formI"  appearance="outline">
+          <mat-form-field  appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput [disabled]="loging" placeholder="Your password" type="password"  #passwordInput="ngModel" (ngModel)="pModel.password" name="password">
-            
+            <input matInput placeholder="Your password" type="password" required minlength="8" maxlength="50" #passwordInput="ngModel" (ngModel)="pModel.password" name="password">
+            <mat-error>Should be at least 8 characters long.</mat-error>
           </mat-form-field>
         </div>
     
-      <button mat-flat-button [disabled]="loging" class="add_btn"  color="primary">Login</button>
-      <!-- <a class="forget" href="">Forget password?</a> -->
+      <button mat-flat-button [disabled]="f.invalid" color="primary">Login</button>
     </form>
-    <div class="pwr">
-      <p class="power">Powered by <a class="markon" href="https://www.markoncs.com/">MCS</a></p>
-    </div>
-      </div>
     
       <!-- <div  style=" display: flex; justify-content: center;" class="links">
         <div>
@@ -40,7 +33,6 @@
           </p>
         </div>
       </div> -->
-      
     </mat-card>
    
   

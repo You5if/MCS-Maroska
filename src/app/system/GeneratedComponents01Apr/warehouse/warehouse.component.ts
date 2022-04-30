@@ -101,7 +101,7 @@ export class WareHouseComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Warehouse - Elhelali");
+    this.titleService.setTitle("Warehouse - Pablo");
       this.refreshMe();
   }
 

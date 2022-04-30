@@ -61,7 +61,8 @@ export class SystemBusinessProfileComponent implements OnInit {
   phoneN: boolean = false;
   data!: Sources[];
   ver!: Sources;
-  imgHttp:string = "http://h"
+  imgHttp2:string = "http://pabloapi.autopay-mcs.com/"
+  imgHttp:string = "http://pab"
   maxSize!: number
 
   light: Sources[] = [];
@@ -117,7 +118,8 @@ export class SystemBusinessProfileComponent implements OnInit {
         apiImagePath: event.apiPath
     };
     this.lFiles.push(file); 
-    this.imagePathUrl2 = this.imgHttp.concat(file.fullPath.substring(file.fullPath.indexOf('h') + 1))
+    this.imagePathUrl2 = this.imgHttp.concat(file.fullPath.substring(file.fullPath.indexOf('b') + 1))
+    console.log(this.imagePathUrl);
     console.log(this.imagePathUrl2);
     
     this.showit = true
@@ -314,15 +316,14 @@ handleKeyUp(e:any){
               }
               this.light.push(this.ver2);
               
-            }else if(this.ver2 && this.ver2.tableColumnId == 11) {
-              this.imagePathUrl = this.ver2.value
+            }else if(this.ver2 && this.ver2.tableColumnId == 12) {
+              this.imagePathUrl = this.imgHttp2.concat(this.ver2.value)
               console.log("img :" , this.imagePathUrl);
             }
             else{
               if(this.ver2) {
                 this.dark.push(this.ver2);
               }
-              
               
             }
     

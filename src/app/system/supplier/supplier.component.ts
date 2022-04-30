@@ -94,7 +94,7 @@ export class SupplierComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Supplier - Elhelali");
+    this.titleService.setTitle("Supplier - Pablo");
       this.refreshMe();
   }
 

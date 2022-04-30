@@ -99,7 +99,7 @@ export class FinancialComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Financial reports - Elhelali");
+    this.titleService.setTitle("Financial reports - Pablo");
       this.refreshMe();
   }
 
