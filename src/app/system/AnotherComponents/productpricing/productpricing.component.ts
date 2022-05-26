@@ -104,17 +104,17 @@ export class ProductPricingComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product pricing - Pablo");
+    this.titleService.setTitle("Item pricing - Pablo");
       this.refreshMe();
   }
 
   refreshMe() {
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Product pricing"
-      this.product = "Product"
-      this.priceType = "Price type"
-      this.productUnit = "Product unit"
+      this.header = "Item pricing"
+      this.product = "Item"
+      this.priceType = "Item type"
+      this.productUnit = "Item unit"
       this.fromDate = "From date"
       this.toDate = "To date"
       this.price = "Price"

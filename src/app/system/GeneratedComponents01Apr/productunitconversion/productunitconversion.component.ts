@@ -100,14 +100,14 @@ export class ProductUnitConversionComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product unit conversion - Pablo");
+    this.titleService.setTitle("Item unit conversion - Pablo");
       this.refreshMe();
   }
 
   refreshMe() {
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Product unit conversion"
+      this.header = "Item unit conversion"
       this.productFromUnitId = "From unit"
       this.productToUnitId = "To unit"
       this.quantity = "Quantity"

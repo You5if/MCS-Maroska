@@ -97,14 +97,14 @@ export class ProductCategoryComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product category - Pablo");
+    this.titleService.setTitle("Item category - Pablo");
       this.refreshMe();
   }
 
   refreshMe() {
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Product category"
+      this.header = "Item category"
       this.categoryCode = "Category code"
       this.categoryName = "Category name"
       this.description = "Description"

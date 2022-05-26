@@ -95,16 +95,16 @@ export class ProductComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product - Pablo");
+    this.titleService.setTitle("Item - Pablo");
       this.refreshMe();
   }
 
   refreshMe() {
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Product"
-      this.productCode = "Product code"
-      this.productName = "Product name"
+      this.header = "Item"
+      this.productCode = "Item code"
+      this.productName = "Item name"
       this.productCategoryId = "Category name"
       this.productGroupId = "Group name"
       this.edit = "Edit"
@@ -187,7 +187,7 @@ export class ProductComponent implements OnInit {
       languageId: Number(localStorage.getItem(this._globals.baseAppName + '_language'))
     };
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-      localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Add product");
+      localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Add item");
     }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "اضافة منتج");
     }
@@ -214,7 +214,7 @@ export class ProductComponent implements OnInit {
       languageId: Number(localStorage.getItem(this._globals.baseAppName + '_language'))
     };
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-      localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Edit product");
+      localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Edit item");
     }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "تعديل منتج");
     }

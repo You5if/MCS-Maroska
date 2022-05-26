@@ -258,7 +258,7 @@ export class InvoiceEntryComponent implements OnInit {
       if(this.data.length > 0) {
         console.log(this.data[0].value)
 
-        this.dapiService.getChild1byChild1(+this.data[0].value).subscribe((res) => {
+        this.dapiService.getChild1byChild1(Number(this.data[0].value)).subscribe((res) => {
   
           console.log("EditRes",res)
         this._ui.loadingStateChanged.next(false);
@@ -273,7 +273,7 @@ export class InvoiceEntryComponent implements OnInit {
             
           }
 
-          this.onChangeValueC(+this.data[5].value)
+          // this.onChangeValueC(Number(this.data[5].value))
           
           
           
@@ -359,16 +359,18 @@ export class InvoiceEntryComponent implements OnInit {
             // this.tableName = this.dropItem.refTable;
             // this.displayColumn = this.dropItem.refColumn;
             // this.condition = this.dropItem.refCondition;
+            if (this.dropItem.tableColumnId !=287) {
 
-          this._select.getDropdown(this.dropItem.refId, this.dropItem.refTable, this.dropItem.refColumn, this.dropItem.refCondition, false).subscribe((res: SelectModel[]) => {
-        // console.log("drop: ", res);
-        this.dropList[k].myarray = res;
-        
-        // this.container.push(res);
-        // console.log(this.container)
-
-
-    });
+              this._select.getDropdown(this.dropItem.refId, this.dropItem.refTable, this.dropItem.refColumn, this.dropItem.refCondition, false).subscribe((res: SelectModel[]) => {
+            // console.log("drop: ", res);
+            this.dropList[k].myarray = res;
+            
+            // this.container.push(res);
+            // console.log(this.container)
+    
+    
+        });
+            }
 
       }
       // console.log("light: ",this.light);
@@ -461,19 +463,19 @@ export class InvoiceEntryComponent implements OnInit {
               this._select.getDropdown(this.dropItemchild.refId, this.dropItemchild.refTable, this.dropItemchild.refColumn, this.dropItemchild.refCondition, false).subscribe((res: SelectModel[]) => {
                 console.log("drop: ", res);
                 this.dropListItem[k].myarray = res;
-                this.onChangeValue(+this.dropListItem[k].value, (k/2) )
+                this.onChangeValue(Number(this.dropListItem[k].value), (k/2) )
               });}else if(this.dropItemchild.tableColumnId == 292) {
               var dt = new Date(this.data[2].value);
               console.log("Al:", +this.data[6].value);
-              this.dapiService.getProductPricing2(+this.childElemInit[2].value, +this.data[6].value, this.data[2].value).subscribe((result) => {
+              this.dapiService.getProductPricing2(Number(this.childElemInit[2].value), Number(this.data[6].value), this.data[2].value).subscribe((result) => {
                 this.dropItemchild.myarray = result
                 console.log("Al:", this.dropItemchild.myarray);
                 for (let i = 0; i < this.dropItemchild.myarray.length; i++) {
-                  if (this.dropItemchild.myarray[i].unitId == +this.dropItemchild.value) {
+                  if (this.dropItemchild.myarray[i].unitId == Number(this.dropItemchild.value)) {
                     console.log("Tes");
                     
                     this.childElemInit[5].value = this.dropItemchild.myarray[i].unitPrice
-                    this.childElemInit[6].value = (+this.childElemInit[3].value * this.dropItemchild.myarray[i].unitPrice).toString()
+                    this.childElemInit[6].value = (Number(this.childElemInit[3].value) * this.dropItemchild.myarray[i].unitPrice).toString()
                   }
                   
                 }
@@ -484,7 +486,7 @@ export class InvoiceEntryComponent implements OnInit {
               this._select.getDropdown(this.dropItemchild.refId, this.dropItemchild.refTable, this.dropItemchild.refColumn, this.dropItemchild.refCondition, false).subscribe((res: SelectModel[]) => {
                 // console.log("drop: ", res);
                 this.dropListItem[k].myarray = res;
-                this.onChangeValue(+this.dropListItem[k].value, (k/2) )
+                this.onChangeValue(Number(this.dropListItem[k].value), (k/2) )
               });
             }
 
@@ -735,7 +737,7 @@ export class InvoiceEntryComponent implements OnInit {
     if(this.data[3].value == "24001"){
       var per: number
       console.log(this.data[4].value);
-      per = +this.data[4].value / 100
+      per = Number(this.data[4].value) / 100
       this.subTotal = 0
     for (let i = 0; i < this.lastDark.child1.length; i++) {
       if (this.lastDark.child1[i] && this.lastDark.child1[i].records[3].tableColumnId == 291) {
@@ -755,7 +757,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value) 
       
     }else{
       
@@ -766,7 +768,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value) 
       
     }
     if (this.lastDark.child2.length > 0) {
@@ -817,7 +819,7 @@ export class InvoiceEntryComponent implements OnInit {
     if(this.data[3].value == "24001"){
       var per: number
       console.log(this.data[4].value);
-      per = +this.data[4].value / 100
+      per = Number(this.data[4].value) / 100
       this.subTotal = 0
     for (let i = 0; i < this.lastDark.child1.length; i++) {
       if (this.lastDark.child1[i] && this.lastDark.child1[i].records[3].tableColumnId == 291) {
@@ -837,7 +839,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value )
       
     }else{
       
@@ -848,7 +850,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value) 
       
     }
     if (this.lastDark.child2.length > 0) {
@@ -875,7 +877,7 @@ export class InvoiceEntryComponent implements OnInit {
     if(searchValue == "24001"){
       var per: number
       console.log(this.data[4].value);
-      per = +this.data[4].value / 100
+      per = Number(this.data[4].value) / 100
       this.subTotal = 0
     for (let i = 0; i < this.lastDark.child1.length; i++) {
       if (this.lastDark.child1[i] && this.lastDark.child1[i].records[3].tableColumnId == 291) {
@@ -895,7 +897,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value
+    this.subTotal  = this.subTotal - Number(this.data[4].value)
       
     }
     if (this.lastDark.child2.length > 0) {
@@ -917,13 +919,13 @@ export class InvoiceEntryComponent implements OnInit {
   }
   onChangeCurrency(idC: number){
     for (let c = 0; c < this.lastDark.child1.length; c++) {
-    this.dapiService.getProductPricing2(+this.lastDark.child1[c].records[2].value, idC, this.data[2].value).subscribe((resu: productPricingModel) => {
+    this.dapiService.getProductPricing2(Number(this.lastDark.child1[c].records[2].value), idC, this.data[2].value).subscribe((resu: productPricingModel) => {
       this._ui.loadingStateChanged.next(false);
       console.log(resu)
       this.lastDark.child1[c].records[4].myarray = resu
       console.log(this.alarray)
       for (let i = 0; i < this.alarray[2].myarray.length; i++) {
-        if (this.lastDark.child1[c].records[4].myarray[i].unitId == +this.last.child1[c].records[2].value) {
+        if (this.lastDark.child1[c].records[4].myarray[i].unitId == Number(this.last.child1[c].records[2].value)) {
           this.lastDark.child1[c].records[5].value = this.lastDark.child1[c].records[4].myarray[i].unitPrice
           this.lastDark.child1[c].records[6].value = (this.lastDark.child1[c].records[3].value * this.lastDark.child1[c].records[4].myarray[i].unitPrice).toString()
         }
@@ -935,13 +937,13 @@ export class InvoiceEntryComponent implements OnInit {
   onChangeDate(e: Event){
     let idD=(<HTMLInputElement>e.target).value
     for (let c = 0; c < this.lastDark.child1.length; c++) {
-    this.dapiService.getProductPricing2(+this.lastDark.child1[c].records[2].value, +this.data[6].value, idD.toString()).subscribe((resu: productPricingModel) => {
+    this.dapiService.getProductPricing2(Number(this.lastDark.child1[c].records[2].value), Number(this.data[6].value), idD.toString()).subscribe((resu: productPricingModel) => {
       this._ui.loadingStateChanged.next(false);
       console.log(resu)
       this.lastDark.child1[c].records[4].myarray = resu
       console.log(this.alarray)
       for (let i = 0; i < this.alarray[2].myarray.length; i++) {
-        if (this.lastDark.child1[c].records[4].myarray[i].unitId == +this.last.child1[c].records[2].value) {
+        if (this.lastDark.child1[c].records[4].myarray[i].unitId == Number(this.last.child1[c].records[2].value)) {
           this.lastDark.child1[c].records[5].value = this.lastDark.child1[c].records[4].myarray[i].unitPrice
           this.lastDark.child1[c].records[6].value = (this.lastDark.child1[c].records[3].value * this.lastDark.child1[c].records[4].myarray[i].unitPrice).toString()
         }
@@ -1010,7 +1012,7 @@ export class InvoiceEntryComponent implements OnInit {
   onChangeValue(id: number, id2: number) {
     this._ui.loadingStateChanged.next(true);
     
-    this.dapiService.getProductPricing2(id, +this.data[6].value, this.data[2].value).subscribe((resu: productPricingModel) => {
+    this.dapiService.getProductPricing2(id, Number(this.data[6].value), this.data[2].value).subscribe((resu: productPricingModel) => {
       this._ui.loadingStateChanged.next(false);
       console.log(resu)
       this.alarray = this.last.child1[id2].records
@@ -1043,13 +1045,14 @@ export class InvoiceEntryComponent implements OnInit {
   }
   onChangeValueC(id: number) {
     this.stringOfV = id.toString()
-    console.log("working fine")
+    console.log(id)
     for(let k=0;k<=this.dropList.length;k++) {
       
       if(this.dropList[k].tableColumnId == 287) {
         this.dropItem = this.dropList[k]
         this.refString = this.dropItem.refCondition + this.stringOfV
         this._select.getDropdown(this.dropItem.refId, this.dropItem.refTable, this.dropItem.refColumn, this.refString, false).subscribe((res: SelectModel[]) => {
+          this._ui.loadingStateChanged.next(false);
           console.log("drop: ", res);
           this.dropList[k].myarray = res;
           this.container.push(res);
@@ -1071,14 +1074,14 @@ export class InvoiceEntryComponent implements OnInit {
     for (let i = 0; i < this.alarray[2].myarray.length; i++) {
       if (this.alarray[2].myarray[i].unitId == id) {
         this.alarray[3].value = this.alarray[2].myarray[i].unitPrice
-        this.alarray[4].value = (+this.alarray[1].value * this.alarray[2].myarray[i].unitPrice).toString()
+        this.alarray[4].value = (Number(this.alarray[1].value) * this.alarray[2].myarray[i].unitPrice).toString()
       }
       
     }
     if(this.data[3].value == "24001"){
       var per: number
       console.log(this.data[4].value);
-      per = +this.data[4].value / 100
+      per = Number(this.data[4].value) / 100
       this.subTotal = 0
     for (let i = 0; i < this.lastDark.child1.length; i++) {
       if (this.lastDark.child1[i] && this.lastDark.child1[i].records[3].tableColumnId == 291) {
@@ -1098,7 +1101,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value) 
       
     }else{
       
@@ -1109,7 +1112,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value) 
       
     }
     if (this.lastDark.child2.length > 0) {
@@ -1139,7 +1142,7 @@ export class InvoiceEntryComponent implements OnInit {
     if(this.data[3].value == "24001"){
       var per: number
       console.log(this.data[4].value);
-      per = +this.data[4].value / 100
+      per = Number(this.data[4].value) / 100
       this.subTotal = 0
     for (let i = 0; i < this.lastDark.child1.length; i++) {
       if (this.lastDark.child1[i] && this.lastDark.child1[i].records[3].tableColumnId == 291) {
@@ -1159,7 +1162,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value )
       
     }else{
       
@@ -1170,7 +1173,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value )
       
     }
     
@@ -1206,7 +1209,7 @@ export class InvoiceEntryComponent implements OnInit {
     if(this.data[3].value == "24001"){
       var per: number
       console.log(this.data[4].value);
-      per = +this.data[4].value / 100
+      per = Number(this.data[4].value) / 100
       this.subTotal = 0
     for (let i = 0; i < this.lastDark.child1.length; i++) {
       if (this.lastDark.child1[i] && this.lastDark.child1[i].records[3].tableColumnId == 291) {
@@ -1226,7 +1229,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value) 
       
     }else{
       
@@ -1237,7 +1240,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value )
       
     }
     if (this.lastDark.child2.length > 0) {
@@ -1267,7 +1270,7 @@ export class InvoiceEntryComponent implements OnInit {
     if(this.data[3].value == "24001"){
       var per: number
       console.log(this.data[4].value);
-      per = +this.data[4].value / 100
+      per = Number(this.data[4].value) / 100
       this.subTotal = 0
     for (let i = 0; i < this.lastDark.child1.length; i++) {
       if (this.lastDark.child1[i] && this.lastDark.child1[i].records[3].tableColumnId == 291) {
@@ -1287,7 +1290,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value) 
       
     }else{
       
@@ -1298,7 +1301,7 @@ export class InvoiceEntryComponent implements OnInit {
         console.log(this.subTotal);
       }
     }
-    this.subTotal  = this.subTotal - +this.data[4].value 
+    this.subTotal  = this.subTotal - Number(this.data[4].value) 
       
     }
     if (this.lastDark.child2.length > 0) {

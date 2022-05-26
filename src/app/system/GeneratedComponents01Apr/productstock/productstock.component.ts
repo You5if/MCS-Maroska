@@ -94,15 +94,15 @@ export class ProductStockComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product stock - Pablo");
+    this.titleService.setTitle("Item stock - Pablo");
       this.refreshMe();
   }
 
   refreshMe() {
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Product stock"
-      this.product ="Product"
+      this.header = "Item stock"
+      this.product ="Item"
       this.unit = "Unit"
       this.quantity = "Quantity"
       this.warehouse = "Warehouse"

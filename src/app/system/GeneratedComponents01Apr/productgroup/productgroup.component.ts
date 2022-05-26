@@ -103,14 +103,14 @@ export class ProductGroupComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product group - Pablo");
+    this.titleService.setTitle("Item group - Pablo");
       this.refreshMe();
   }
 
   refreshMe() {
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Product group"
+      this.header = "item group"
       this.groupCode = "Group code"
       this.groupName = "Group name"
       this.categoryName = "Category"

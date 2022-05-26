@@ -97,14 +97,14 @@ export class ProductUnitComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Product unit - Pablo");
+    this.titleService.setTitle("Item unit - Pablo");
       this.refreshMe();
   }
 
   refreshMe() {
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Product unit"
+      this.header = "Item unit"
       this.unitName = "Unit name"
       this.description = "Description"
       this.edit = "Edit"
