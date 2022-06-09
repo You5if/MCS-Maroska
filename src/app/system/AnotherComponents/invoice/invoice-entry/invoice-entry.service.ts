@@ -89,6 +89,14 @@ export class InvoiceEntryService {
             );
            }
 
+           getBarcodeProduct(barcode: string){
+            return this.httpClient.get(this._globals.baseAPIUrl + 'Product/bybarcode/' + barcode).pipe(
+            map((result: any) => {
+            return result;
+            }), catchError(this._cf.handleError)
+            );
+           }
+
 
 
 //Bank

@@ -257,32 +257,7 @@
       </mat-grid-list>
     </div>
   </form>
-  <div class="upload">
-    <div class="img_profile">
-      <img
-        *ngIf="!showit"
-        [src]="imagePathUrl"
-        alt=""
-        width="100px"
-        height="100px"
-      />
-      <img
-        *ngIf="showit"
-        [src]="imagePathUrl2"
-        alt=""
-        width="100px"
-        height="100px"
-      />
-    </div>
 
-    <div class="img_profile" *ngIf="visible">
-      <app-profile-upload
-        [myFiles]="lFiles"
-        (onUploadFinished)="uploadFinished($event)"
-      >
-      </app-profile-upload>
-    </div>
-  </div>
   <div class="btn-container">
     <button
       class="BtnC"

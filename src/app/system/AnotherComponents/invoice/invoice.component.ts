@@ -469,7 +469,10 @@ export class InvoiceComponent implements OnInit {
     if (result === undefined) {
       const dialogRef = this.dialog.open(InvoiceEntryComponent, {
         disableClose: true,
-        
+        maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
         data: {}
       });
       dialogRef.afterClosed().subscribe(() => {
@@ -478,7 +481,10 @@ export class InvoiceComponent implements OnInit {
     } else {
       const dialogRef = this.dialog.open(InvoiceEntryComponent, {
         disableClose: true,
-        
+        maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
         data: result
       });
       dialogRef.afterClosed().subscribe(() => {

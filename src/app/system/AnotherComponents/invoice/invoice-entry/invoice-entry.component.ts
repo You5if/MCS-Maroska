@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { UIService } from 'src/app/components/shared/uiservices/UI.service';
 import { MessageBoxService } from 'src/app/components/messagebox/message-box.service';
 import { AuthService } from 'src/app/components/security/auth/auth.service';
@@ -19,6 +19,7 @@ import { AppGlobals } from 'src/app/app.global';
 import { InvoiceEntryService } from './invoice-entry.service';
 import { formatDate } from '@angular/common';
 import { Direction } from '@angular/cdk/bidi';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-invoice-entry',
@@ -203,6 +204,9 @@ export class InvoiceEntryComponent implements OnInit {
   num: number = 10;
   child1Data: any;
   vale!: Sources[]
+  isBarcode: boolean = false
+    Barcoded: boolean = false
+    Barcode: string
 
 
   constructor( private dapiService: InvoiceEntryService,
@@ -213,6 +217,7 @@ export class InvoiceEntryComponent implements OnInit {
       private dialogRef: MatDialogRef<InvoiceEntryComponent>,
       @Inject(MAT_DIALOG_DATA) public pModel: Send) {}
 
+      @ViewChild('myBarcode') nameInput: MatInput;
   ngOnInit(): void {
 
 
@@ -348,9 +353,9 @@ export class InvoiceEntryComponent implements OnInit {
 
       
       this.breakpoint =
-      window.innerWidth <= 960
+      window.innerWidth <= 1350
         ? 1
-        : this.data[0].maxRowSize;
+        : 6;
 
       for(let k=0;k<=this.dropList.length;k++) {
         this.dropItem = this.dropList[k]
@@ -396,10 +401,193 @@ export class InvoiceEntryComponent implements OnInit {
     
   }
 
- 
+  onBarcode(event: any) {
+    console.log(event.checked);
+    if (event.checked === true) {
+      this.Barcoded = true
+      this.nameInput.focus();
+    }else {
+      this.Barcoded = false
+    }
+  }
+
+  onBarcodeChange(event: any) {
+    // console.log("Barcode is:", event);
+    this.dapiService.getBarcodeProduct(event.value).subscribe((result) => {
+      if (result != null) {
+        console.log(result);
+        this.addChildFromBarcode(0, result.phProductId)
+        this.nameInput.value = ""
+        this.allTotal()
+      }
+      
+    })
+    this.allTotal()
+    
+  }
 
  
+  addChildFromBarcode(id:number, dropId: number) {  
+    let myElem = {
+      records: []as any[],
+      auditColumn: {
+        approvalStatusId: 1100001,
+        companyId: 10001,
+        branchId: 201,
+        financialYearId: 1,
+        userId: 1,
+        mACAddress: "unidentified",
+        hostName: "unidentified",
+        iPAddress: "unidentified",
+        deviceType: "Win32"
+      }
+    }
+    let childElemDark2 = {
+      records: [] as any[],
+      auditColumn: {
+        approvalStatusId: 1100001,
+        companyId: 10001,
+        branchId: 201,
+        financialYearId: 1,
+        userId: 1,
+        mACAddress: "unidentified",
+        hostName: "unidentified",
+        iPAddress: "unidentified",
+        deviceType: "Win32"
+      }
+    }
+    this.model2 = {
+      tableId: 47,
+      recordId: id,
+      userId: 26,
+      roleId: 2,
+      languageId:  Number(localStorage.getItem(this._globals.baseAppName + '_language'))
+    };
+    this._ui.loadingStateChanged.next(true);
+    this.dapiService.child1Controllers(this.model2).subscribe((res) => {
+      this._ui.loadingStateChanged.next(false);
 
+      this.childElemInit = res
+      console.log(this.childElemInit)
+      this.dropListItem.push(this.childElemInit[2])
+      this.dropListItem.push(this.childElemInit[4])
+      for(let k=0;k<this.dropListItem.length;k++) {
+        console.log("loop cycle" + k)
+        this.dropItemchild = this.dropListItem[k]
+        console.log("DropitemTax", this.dropItemchild)
+
+            // this.tableId = this.dropItem.refId;
+            // this.tableName = this.dropItem.refTable;
+            // this.displayColumn = this.dropItem.refColumn;
+            // this.condition = this.dropItem.refCondition;
+            
+            
+            if(this.dropItemchild.tableColumnId == 290) {
+              var dt = new Date(this.data[2].value);
+              console.log("Al:", +this.data[6].value);
+              this.dropItemchild.idCount = this.dropItemchild.value
+              this._select.getDropdown(this.dropItemchild.refId, this.dropItemchild.refTable, this.dropItemchild.refColumn, this.dropItemchild.refCondition, false).subscribe((res: SelectModel[]) => {
+                console.log("drop: ", res);
+                this.dropListItem[k].myarray = res;
+                this.onChangeValue(Number(this.dropListItem[k].value), (k/2) )
+              });}else if(this.dropItemchild.tableColumnId == 292) {
+              var dt = new Date(this.data[2].value);
+              console.log("Al:", +this.data[6].value);
+              this.dapiService.getProductPricing2(Number(this.childElemInit[2].value), Number(this.data[6].value), this.data[2].value).subscribe((result) => {
+                this.dropItemchild.myarray = result
+                console.log("Al:", this.dropItemchild.myarray);
+                for (let i = 0; i < this.dropItemchild.myarray.length; i++) {
+                  if (this.dropItemchild.myarray[i].unitId == Number(this.dropItemchild.value)) {
+                    console.log("Tes");
+                    
+                    this.childElemInit[5].value = this.dropItemchild.myarray[i].unitPrice
+                    this.childElemInit[6].value = (Number(this.childElemInit[3].value) * this.dropItemchild.myarray[i].unitPrice).toString()
+                  }
+                  
+                }
+                
+              })
+
+            }else {
+              this._select.getDropdown(this.dropItemchild.refId, this.dropItemchild.refTable, this.dropItemchild.refColumn, this.dropItemchild.refCondition, false).subscribe((res: SelectModel[]) => {
+                // console.log("drop: ", res);
+                this.dropListItem[k].myarray = res;
+                this.onChangeValue(Number(this.dropListItem[k].value), (k/2) )
+              });
+            }
+
+            
+            
+          
+        
+        // this.container.push(res);
+        // console.log(this.container)
+
+
+    
+  }
+
+  this.childElemInit[2].value = dropId.toString()
+  this.childElemInit[3].value = (+this.childElemInit[3].value + 1).toString()
+  
+      
+
+      for(let i=0;i<this.childElemInit.length;i++){
+        this.verCh2 = this.childElemInit[i]
+        childElemDark2.records.push(this.verCh2);
+        
+
+      }
+      this.lastDark.child1.push(childElemDark2);
+      this.allTotal()
+      this.childElemInit.forEach((itemE) =>{
+        if (itemE && itemE.inTransaction && itemE.access != "NoAccess"){
+          
+          // this.childElem.records.push(itemE);
+          myElem.records.push(itemE)
+          
+  
+        }else{
+          
+            this.childElemDark.push(this.verCh2);
+            // console.log(this.childElemDark)
+          
+  
+  
+        }
+      })
+      
+      // this.childElem = res
+      // console.log(JSON.stringify(this.child1Data))
+      this.childElem2 = null
+      this.childElem2 = this.childElem
+
+      //this.last.child1.push(this.childElem2);
+      this.last.child1.push(myElem)
+      
+      
+      
+      
+      
+     
+      
+    })
+    console.log("child1 final", this.last)
+    console.log("DarlDarl",this.lastDark)
+    console.log(this.data);
+    
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+  }
 
   addChild1ExpenseItem(id:number) {  
     let myElem = {
@@ -1010,7 +1198,7 @@ export class InvoiceEntryComponent implements OnInit {
   }
 
   onChangeValue(id: number, id2: number) {
-    this._ui.loadingStateChanged.next(true);
+    // this._ui.loadingStateChanged.next(true);
     
     this.dapiService.getProductPricing2(id, Number(this.data[6].value), this.data[2].value).subscribe((resu: productPricingModel) => {
       this._ui.loadingStateChanged.next(false);
@@ -1587,13 +1775,13 @@ export class InvoiceEntryComponent implements OnInit {
 
   onResize(event:any) {
     this.spacepoint =
-      event.target.innerWidth <= 960
+      event.target.innerWidth <= 1350
         ? (this.spacezone = false)
         : (this.spacezone = true);
     this.breakpoint =
-      event.target.innerWidth <= 960
+      event.target.innerWidth <= 1350
         ? 1
-        : this.data[0].maxRowSize;
+        : 6;
   }
 
   onCancel() {

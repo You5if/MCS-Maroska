@@ -10,8 +10,11 @@
 ::ng-deep .mat-dialog-container {
   height: auto;
 }
+
+
+
 .section {
-  width: 700px;
+  width: 100%;
 }
 
 .cancel_Img {
@@ -19,11 +22,15 @@
   height: 14px;
   cursor: pointer;
 }
+.fa-barcode {
+  font-size: 40px !important;
+}
 
 .Main {
   width: 100%;
   padding: 0;
-  height: 340px;
+  padding-bottom: 100px;
+  flex: 1 1 auto;
   overflow: hidden;
   overflow-y: scroll;
 }
@@ -37,6 +44,7 @@
 }
 
 .bigMain {
+  top: 0;
   width: 100%;
   padding: 0 0 0 30px;
   display: flex;
@@ -61,6 +69,15 @@
   color: white;
   background: #20bf6b;
 }
+.BtnE {
+  outline: none;
+  border: none;
+  margin-left: 10px;
+  width: 100px;
+  margin-right: 10px;
+  color: white;
+  background: #ff7979;
+}
 .BtnC {
   outline: none;
   border: none;
@@ -73,13 +90,37 @@
 .fontY2 {
   font-size: 20px !important;
 
+  font-weight: bolder;
+}
+.Extbtn {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.fontYA {
+  font-size: 12px !important;
+
   font-weight: lighter;
+}
+
+.avaBox {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .bot {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  padding-bottom: 20px;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #ffffff;
+   text-align: center;
 }
 .botTotal {
   width: 100%;
@@ -120,6 +161,16 @@
   margin: 0px;
 }
 
+
+.card {
+  background-color: hsl(176, 57%, 89%);
+  flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    height: 80px;
+    padding-top: 5px;
+}
+
 .cardForm {
   margin: 10px;
   width: 100%;
@@ -136,7 +187,11 @@
 
   color: white;
 }
-
+.Ava {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .space {
   width: 200px;
   height: 50px;
@@ -144,10 +199,29 @@
   border-radius: 20px;
 }
 
+.totalDynamic {
+  margin-top: 5px;
+}
+.deleteBtn {
+  margin-bottom: 10px;
+}
+
+.topAdjust {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+.topAdjust2 {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-right: 10px;
+}
+
 .btn-container {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: row;
   margin-top: 9px;
 }
 .btn-container2 {
@@ -173,9 +247,7 @@ label {
 }
 
 @media (max-width: 960px) {
-  .section {
-    width: 300px;
-  }
+  
   .btn-container2 {
     width: 100%;
     display: flex;

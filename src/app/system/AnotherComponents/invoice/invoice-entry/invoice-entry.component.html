@@ -12,7 +12,7 @@
   </div>
 
   <form class="Main" [dir]="direction">
-    <div class="container">
+    <div fxLayout="column" fxLayoutGap="5px" class="cardContainer">
       <mat-grid-list
         [cols]="breakpoint"
         rowHeight="90px"
@@ -330,7 +330,7 @@
       >
         <mat-grid-list
           [cols]="breakpoint"
-          rowHeight="100px"
+          rowHeight="85px"
           (window:resize)="onResize($event)"
         >
           <div *ngFor="let source of sourceChild1.records">
@@ -403,7 +403,7 @@
                     class="radio"
                   >
                     <h3>{{ source.label }}:</h3>
-                    <h5>{{ source.value }}</h5>
+                    <h5 class="totalDynamic">{{ source.value }}</h5>
                   </div>
                 </div>
               </mat-grid-tile>
@@ -635,18 +635,21 @@
               </div>
             </div>
           </div>
+          <mat-grid-tile >
+            <button mat-icon-button class="deleteBtn" type="button" (click)="deleteFun(i)">
+              <mat-icon
+                small
+                class="mat-icon material-icons"
+                role="img"
+                aria-hidden="true"
+                color="warn"
+              >
+                delete
+              </mat-icon>
+            </button>
+          </mat-grid-tile>
         </mat-grid-list>
-        <button mat-icon-button type="button" (click)="deleteFun(i)">
-          <mat-icon
-            small
-            class="mat-icon material-icons"
-            role="img"
-            aria-hidden="true"
-            color="warn"
-          >
-            delete
-          </mat-icon>
-        </button>
+        
       </mat-card>
     </div>
     <div class="btn-container">
@@ -659,6 +662,15 @@
       >
         + Add item
       </button>
+      <mat-checkbox
+        class="topAdjust2"
+        [ngModel]="isBarcode"
+        [ngModelOptions]="{standalone: true}"
+        (change)="onBarcode($event)" 
+        >&nbsp; &nbsp; <i class="fa fa-barcode"></i><i class="fa fa-barcode"></i></mat-checkbox>
+        <mat-form-field class="topAdjust" *ngIf="Barcoded" appearance="outline">
+          <input type="text" matInput #myBarcode="matInput" [ngModel]="Barcode" (input)="onBarcodeChange($event.target)">
+        </mat-form-field>
     </div>
   </form>
   <div class="bot">
