@@ -322,9 +322,9 @@
     </div>
 
     <div fxLayout="column" fxLayoutGap="10px" class="cardContainer">
-      <mat-card
+      <div
         fxLayout="column"
-        class="card"
+        class="{{breakpoint < 1350 ? 'card2' : 'card'}}"
         *ngFor="let sourceChild1 of last.child1; let i = index"
         [attr.data-index]="i"
       >
@@ -650,7 +650,7 @@
           </mat-grid-tile>
         </mat-grid-list>
         
-      </mat-card>
+      </div>
     </div>
     <div class="btn-container">
       <!-- <button mat-raised-button color="primary" (click)="addChild1ExpenseItem(0)" type="submit">Add</button> -->

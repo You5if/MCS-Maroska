@@ -416,7 +416,7 @@ export class InvoiceEntryComponent implements OnInit {
     this.dapiService.getBarcodeProduct(event.value).subscribe((result) => {
       if (result != null) {
         console.log(result);
-        this.addChildFromBarcode(0, result.phProductId)
+        this.addChildFromBarcode(0, result.productId)
         this.nameInput.value = ""
         this.allTotal()
       }
@@ -469,6 +469,8 @@ export class InvoiceEntryComponent implements OnInit {
 
       this.childElemInit = res
       console.log(this.childElemInit)
+      this.childElemInit[2].value = dropId.toString()
+      this.childElemInit[3].value = "1"
       this.dropListItem.push(this.childElemInit[2])
       this.dropListItem.push(this.childElemInit[4])
       for(let k=0;k<this.dropListItem.length;k++) {
@@ -526,9 +528,6 @@ export class InvoiceEntryComponent implements OnInit {
 
     
   }
-
-  this.childElemInit[2].value = dropId.toString()
-  this.childElemInit[3].value = (+this.childElemInit[3].value + 1).toString()
   
       
 
@@ -569,7 +568,6 @@ export class InvoiceEntryComponent implements OnInit {
       
       
       
-     
       
     })
     console.log("child1 final", this.last)
@@ -655,20 +653,22 @@ export class InvoiceEntryComponent implements OnInit {
               });}else if(this.dropItemchild.tableColumnId == 292) {
               var dt = new Date(this.data[2].value);
               console.log("Al:", +this.data[6].value);
-              this.dapiService.getProductPricing2(Number(this.childElemInit[2].value), Number(this.data[6].value), this.data[2].value).subscribe((result) => {
-                this.dropItemchild.myarray = result
-                console.log("Al:", this.dropItemchild.myarray);
-                for (let i = 0; i < this.dropItemchild.myarray.length; i++) {
-                  if (this.dropItemchild.myarray[i].unitId == Number(this.dropItemchild.value)) {
-                    console.log("Tes");
+              if (this.childElemInit[5].value == "0.00") {
+                this.dapiService.getProductPricing2(Number(this.childElemInit[2].value), Number(this.data[6].value), this.data[2].value).subscribe((result) => {
+                  this.dropItemchild.myarray = result
+                  console.log("Al:", this.dropItemchild.myarray);
+                  for (let i = 0; i < this.dropItemchild.myarray.length; i++) {
+                    if (this.dropItemchild.myarray[i].unitId == Number(this.dropItemchild.value)) {
+                      console.log("Tes");
+                      
+                      this.childElemInit[5].value = this.dropItemchild.myarray[i].unitPrice
+                      this.childElemInit[6].value = (Number(this.childElemInit[3].value) * this.dropItemchild.myarray[i].unitPrice).toString()
+                    }
                     
-                    this.childElemInit[5].value = this.dropItemchild.myarray[i].unitPrice
-                    this.childElemInit[6].value = (Number(this.childElemInit[3].value) * this.dropItemchild.myarray[i].unitPrice).toString()
                   }
                   
-                }
-                
-              })
+                })
+              }
 
             }else {
               this._select.getDropdown(this.dropItemchild.refId, this.dropItemchild.refTable, this.dropItemchild.refColumn, this.dropItemchild.refCondition, false).subscribe((res: SelectModel[]) => {
@@ -1209,7 +1209,9 @@ export class InvoiceEntryComponent implements OnInit {
         if(element.tableColumnId == 290){
           if (element.idCount != element.value) {
             this.alarray.forEach((element2) => {
-              if (element2.tableColumnId == 293) {
+              if (element2.tableColumnId == 292) {
+                element2.value = ""
+              }else if (element2.tableColumnId == 293) {
                 element2.value = "0.00"
               }else if (element2.tableColumnId == 294) {
                 element2.value = "0.00"
@@ -1219,9 +1221,12 @@ export class InvoiceEntryComponent implements OnInit {
           }
         }else if(element.tableColumnId == 292){
           element.myarray = resu
+          
+          
         }
       });
     })
+    this.allTotal()
     // for (let i = 0; i < this.alarray[2].myarray.length; i++) {
     //   if (this.alarray[2].myarray[i].unitId == id) {
     //     this.alarray[3].value = this.alarray[2].myarray[i].unitPrice
@@ -1259,10 +1264,10 @@ export class InvoiceEntryComponent implements OnInit {
     console.log(this.alarray);
     console.log(id, id2);
     
-    for (let i = 0; i < this.alarray[2].myarray.length; i++) {
-      if (this.alarray[2].myarray[i].unitId == id) {
-        this.alarray[3].value = this.alarray[2].myarray[i].unitPrice
-        this.alarray[4].value = (Number(this.alarray[1].value) * this.alarray[2].myarray[i].unitPrice).toString()
+    for (let i = 0; i < this.lastDark.child1[id2].records[4].myarray.length; i++) {
+      if (this.lastDark.child1[id2].records[4].myarray[i].unitId == id) {
+        this.lastDark.child1[id2].records[5].value = this.lastDark.child1[id2].records[4].myarray[i].unitPrice
+        this.lastDark.child1[id2].records[6].value = (Number(this.lastDark.child1[id2].records[3].value) * this.lastDark.child1[id2].records[4].myarray[i].unitPrice).toString()
       }
       
     }
@@ -1634,7 +1639,7 @@ export class InvoiceEntryComponent implements OnInit {
   onResultsChild1(id:number, e:any, i:number) {
     console.log('ee',e);
     
-    this.lastDark.child1[i].forEach((res:any) => {
+    this.last.child1[i].records.forEach((res:any) => {
       if (res.tableColumnId === id) {
         console.log('ee', e);
         
@@ -1706,7 +1711,7 @@ export class InvoiceEntryComponent implements OnInit {
     }
      
     
-     console.log("Dark",this.lastDark);
+     console.log("Dark",JSON.stringify(this.lastDark));
       
           if(this.lastDark.records[0].entryMode == "A"){
             console.log('Last:', JSON.stringify(this.lastDark));

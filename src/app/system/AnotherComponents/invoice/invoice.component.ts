@@ -60,7 +60,7 @@ export class InvoiceComponent implements OnInit {
 
   model!: Send;
     displayedColumns: string[] =
-        ['select','InvoiceNo', 'InvoiceDate','customer', 'warehouse', 'report', 'delete'];
+        ['select','InvoiceNo', 'InvoiceDate', 'report', 'delete'];
 
     dataSource: any;
     isLastPage = false;
@@ -141,7 +141,7 @@ export class InvoiceComponent implements OnInit {
     
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Invoice"
+      this.header = "POS"
       this.invoiceNo = "Invoice No."
       this.invoiceDate = "Invoice Date"
       this.customer = "Customer"
@@ -152,7 +152,7 @@ export class InvoiceComponent implements OnInit {
       
     }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       this.direction = "rtl"
-      this.header = "الفواتير"
+      this.header = "POS"
       this.invoiceNo = "الفاتورة"
       this.invoiceDate = "التاريخ"
       this.customer = "العميل"

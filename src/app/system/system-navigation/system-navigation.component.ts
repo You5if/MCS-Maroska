@@ -87,6 +87,7 @@ export class SystemNavigationComponent implements OnInit {
     'password': '123456789',
     'loginType': 1
   }
+  forexManagement: string;
 
   constructor(private _globals: AppGlobals,
     private _auth: AuthService,) { }
@@ -108,12 +109,13 @@ ngOnInit(): void {
       this.expense = "Expenses"
       this.bank = "Bank"
       this.profile = "Profile"
-      this.invoice = "Invoice"
+      this.invoice = "POS"
       this.bankBranch = "Bank branch"
       this.proExpense = "Procurement expenses"
       this.proInv = "Purchase invoice"
       this.proExpenseList = "Procurement expense list"
       this.bankAccount = "Bank account"
+      this.forexManagement = "Forex management"
       this.reports = "Reports"
       this.paymentFromCompany = "Payment to supplier"
       this.paymentToCompany = "Customer payment"
@@ -645,12 +647,13 @@ onToggle() {
       this.direction = "ltr"
       this.home = "Home"
       this.businessP = "Company profile"
+      this.forexManagement = "Forex management"
       this.journal = "Journal"
       this.expense = "Expenses"
       this.paymentFromCompany = "Payment to supplier"
       this.paymentToCompany = "Customer payment"
       this.tax = "Tax"
-      this.invoice = "Invoice"
+      this.invoice = "POS"
       this.bank = "Bank"
       this.fym = "Financial year management"
       this.purchase = "Purchase"
@@ -704,7 +707,8 @@ onToggle() {
       this.home = " الرئيسية "
       this.businessP = "حساب الشركة"
       this.journal = "السجلات"
-      this.invoice = "الفواتير"
+      this.invoice = "POS"
+      this.forexManagement = "ادارة الفوركس"
       this.bank = "البنك"
       this.reports = "التقارير"
       this.paymentFromCompany = "الدفع الى الممول"
@@ -758,9 +762,10 @@ onToggle() {
       this.home = "Home"
       this.businessP = "Business Profile"
       this.journal = "journal"
-      this.invoice = "Invoice"
+      this.invoice = "POS"
       this.paymentFromCompany = "Company payment"
       this.paymentToCompany = "Customer payment"
+      this.forexManagement = "Forex management"
       this.expense = "Expenses"
       this.customer = "Customer"
       this.accountConfiguration = "Account Configuration"

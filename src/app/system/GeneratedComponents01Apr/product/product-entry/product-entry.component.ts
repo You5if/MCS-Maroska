@@ -95,7 +95,7 @@ export class ProductEntryComponent implements OnInit {
   imagePathUrl!: string;
   imagePathUrl2!: string;
   lFiles: FileListModel[] = [];
-  imgHttp:string = "http://h"
+  imgHttp:string = "http://pab"
 
 
 
@@ -217,7 +217,28 @@ export class ProductEntryComponent implements OnInit {
       })
   }
 
- 
+   public uploadFinished = (event:any) => { // this is event being called when file gets uploaded
+    
+    const file: FileListModel = {
+        originalFileName: event.originalFileName,
+        fileName: event.fileName,
+        extention: event.extention,
+        fullPath: event.fullPath,
+        apiPath: event.apiPath,
+        apiImagePath: event.apiPath
+    };
+    this.lFiles.push(file); 
+    this.imagePathUrl2 = this.imgHttp.concat(file.fullPath.substring(file.fullPath.indexOf('b') + 1))
+    console.log(this.imagePathUrl2);
+    
+    this.showit = true
+    // and it pushes the files to this array also, then why doesnt it show?
+    // this.data = this.lFiles;
+    // this.validatedisabled = false
+    // this.validatedisabledmethod();
+    // bro problem is not this component, it somehow is not reflecting in other two... the files which i brought here..
+    // yea i was just making sure they were leaving here correctly.. now i will go to step 2, sorry ok
+}
 
   onChangeValue(id: number) {
     this.stringOfV = id.toString()
@@ -292,7 +313,7 @@ export class ProductEntryComponent implements OnInit {
      this.last.records.forEach((Object2:any)=> {
       if(Object2 && Object2.tableColumnId === 200){
         if(this.upload.imgFullPath != null) {
-          Object2.value = this.imgHttp.concat(this.upload.imgFullPath.substring(this.upload.imgFullPath.indexOf('h') + 1))
+          Object2.value = this.imgHttp.concat(this.upload.imgFullPath.substring(this.upload.imgFullPath.indexOf('b') + 1))
         }else {
           Object2.value = Object2.value
         }
