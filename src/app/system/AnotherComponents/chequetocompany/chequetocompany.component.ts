@@ -114,7 +114,7 @@ export class ChequeToCompanyComponent implements OnInit {
   refreshMe() {
     if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
-      this.header = "Cheque to"
+      this.header = "Chequec"
       this.chequeNumber = "Cheque"
       this.amount = "Amount"
       this.currencyName = "Currency"
@@ -127,7 +127,7 @@ export class ChequeToCompanyComponent implements OnInit {
       
     }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       this.direction = "rtl"
-      this.header = "الشيكات الى"
+      this.header = "الشيكات"
       this.chequeNumber = "الشيك"
       this.amount = "المبلغ"
       this.currencyName = "العملة"

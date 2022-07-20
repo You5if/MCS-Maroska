@@ -96,6 +96,13 @@ export class InvoiceEntryService {
             }), catchError(this._cf.handleError)
             );
            }
+           getForex(currency:number, date: string){
+            return this.httpClient.get(this._globals.baseAPIUrl + 'Forex/getForex/' + currency + "/" + date).pipe(
+            map((result: any) => {
+            return result;
+            }), catchError(this._cf.handleError)
+            );
+           }
 
 
 

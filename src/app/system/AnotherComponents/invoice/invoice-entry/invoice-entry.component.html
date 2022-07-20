@@ -676,17 +676,20 @@
   <div class="bot">
     <div class="botTotal">
       <div fxLayout fxLayoutGap="5px">
-        <h4 class="fontY2">Sub-Total</h4>
+        <h4 class="fontY2">{{STotal}}</h4>
         <h4 class="fontY2">:</h4>
         <h4 class="fontY2">
           {{ subTotal }}
         </h4>
       </div>
       <div fxLayout fxLayoutGap="5px">
-        <h4 class="fontY2">Grand Total</h4>
+        <h4 class="fontY2">{{GTotal}}</h4>
         <h4 class="fontY2">:</h4>
         <h4 class="fontY2">
           {{ total }}
+        </h4>
+        <h4 class="fontY3">
+          {{getForex}}
         </h4>
       </div>
     </div>

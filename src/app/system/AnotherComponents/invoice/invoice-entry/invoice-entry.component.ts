@@ -165,6 +165,8 @@ export class InvoiceEntryComponent implements OnInit {
   maxSize!: number;
   submit!: string;
   cancel!: string;
+  STotal!: string;
+  GTotal!: string;
   stringOfV!: string;
   refString!: string;
 
@@ -207,6 +209,7 @@ export class InvoiceEntryComponent implements OnInit {
   isBarcode: boolean = false
     Barcoded: boolean = false
     Barcode: string
+  getForex: string;
 
 
   constructor( private dapiService: InvoiceEntryService,
@@ -242,11 +245,15 @@ export class InvoiceEntryComponent implements OnInit {
       this.direction = "ltr"
       this.submit = "Submit"
       this.cancel = "Cancel"
+      this.STotal = "Sub-Total"
+      this.GTotal = "Grand Total"
       
     }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       this.direction = "rtl"
       this.submit = "ارسال"
       this.cancel = "الغاء"
+      this.STotal = "المجموع"
+      this.GTotal = "المجموع الكلي"
      
 
     }
@@ -258,6 +265,12 @@ export class InvoiceEntryComponent implements OnInit {
       this._ui.loadingStateChanged.next(false);
       console.log("hello",res)
       this.data = res;
+      // this.data[6].inTransaction = true
+      this.dapiService.getForex(Number(this.data[6].value), this.data[2].value).subscribe((getForexRes) => {
+        console.log(getForexRes);
+        this.getForex = "(USD" + " " + getForexRes[0].name +")"
+        
+      })
       if(localStorage.getItem(this._globals.baseAppName + '_Add&Edit2') == "Edit") {
         console.log(this.data.length)
       if(this.data.length > 0) {
@@ -1106,6 +1119,11 @@ export class InvoiceEntryComponent implements OnInit {
     
   }
   onChangeCurrency(idC: number){
+    this.dapiService.getForex(idC, this.data[2].value).subscribe((getForexRes) => {
+      console.log(getForexRes);
+      this.getForex = "(USD" + " " + getForexRes[0].name +")"
+      
+    })
     for (let c = 0; c < this.lastDark.child1.length; c++) {
     this.dapiService.getProductPricing2(Number(this.lastDark.child1[c].records[2].value), idC, this.data[2].value).subscribe((resu: productPricingModel) => {
       this._ui.loadingStateChanged.next(false);
@@ -1139,6 +1157,11 @@ export class InvoiceEntryComponent implements OnInit {
       }
     })
   }
+  this.dapiService.getForex(Number(this.data[6].value), idD).subscribe((getForexRes) => {
+    console.log(getForexRes);
+    this.getForex = "(USD" + " " + getForexRes[0].name +")"
+    
+  })
   }
 
   onDiscountAmountChange(e: Event) {

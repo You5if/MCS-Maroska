@@ -29,14 +29,14 @@ import { Direction } from '@angular/cdk/bidi';
 
 
 @Component({
-    selector: 'app-invoice',
-    templateUrl: './invoice.component.html',
-    styleUrls: ['./invoice.component.scss']
-  })
+  selector: 'app-invoice',
+  templateUrl: './invoice.component.html',
+  styleUrls: ['./invoice.component.scss']
+})
 
 export class InvoiceComponent implements OnInit {
 
-  idS! : number;
+  idS!: number;
   direction!: Direction;
   customerCode!: string;
   customerName!: string;
@@ -44,8 +44,8 @@ export class InvoiceComponent implements OnInit {
   balance!: string;
   invoiceNo!: string;
   invoiceDate!: string;
-  customer!:string;
-  warehouse!:string;
+  customer!: string;
+  warehouse!: string;
   edit!: string;
   header!: string;
   submit!: string;
@@ -54,73 +54,73 @@ export class InvoiceComponent implements OnInit {
 
   opC: boolean = true
 
-  pageData :any
+  pageData: any
 
   deleteModel!: DeleteModel
 
   model!: Send;
-    displayedColumns: string[] =
-        ['select','InvoiceNo', 'InvoiceDate', 'report', 'delete'];
+  displayedColumns: string[] =
+    ['select', 'InvoiceNo', 'InvoiceDate', 'report', 'delete'];
 
-    dataSource: any;
-    isLastPage = false;
-    pTableName: string;
-    pScreenId: number;
-    pTableId: number;
-    recordsPerPage: number;
-    currentPageIndex: number;
-    menuId: number;
-    indexes!: any[]
-    report!:string;
-    delete!: string;
+  dataSource: any;
+  isLastPage = false;
+  pTableName: string;
+  pScreenId: number;
+  pTableId: number;
+  recordsPerPage: number;
+  currentPageIndex: number;
+  menuId: number;
+  indexes!: any[]
+  report!: string;
+  delete!: string;
 
-    role = localStorage.getItem("role");
-    sortV!:string
+  role = localStorage.getItem("role");
+  sortV!: string
 
-    filterV!: string
+  filterV!: string
 
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    totalRecords!: number;
-    clickedRows = new Set<InvoiceModel>();
-    pageSizeOptions: number[] = [5, 10, 25, 100];
+  totalRecords!: number;
+  clickedRows = new Set<InvoiceModel>();
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
-    screenRights: RightModel = {
-        amendFlag: true,
-        createFlag: true,
-        deleteFlag: true,
-        editFlag: true,
-        exportFlag: true,
-        printFlag: true,
-        reverseFlag: true,
-        shortCloseFlag: true,
-        viewFlag: true
-      };
+  screenRights: RightModel = {
+    amendFlag: true,
+    createFlag: true,
+    deleteFlag: true,
+    editFlag: true,
+    exportFlag: true,
+    printFlag: true,
+    reverseFlag: true,
+    shortCloseFlag: true,
+    viewFlag: true
+  };
 
-    constructor(
-        public dialog: MatDialog,
-        private _cf: CommonService,
-        private _report: ReportPageService,
-        private _ui: UIService,
-        private _globals: AppGlobals,
-        private _msg: MessageBoxService,
-        private alertify: AlertifyService,
-        public _nav: SystemNavigationComponent,
-        private _auth: AuthService,
-        private _select: SelectService,
-        private invoiceservice: InvoiceService,
-        private titleService: Title,
+  constructor(
+    public dialog: MatDialog,
+    private _cf: CommonService,
+    private _report: ReportPageService,
+    private _ui: UIService,
+    private _globals: AppGlobals,
+    private _msg: MessageBoxService,
+    private alertify: AlertifyService,
+    public _nav: SystemNavigationComponent,
+    private _auth: AuthService,
+    private _select: SelectService,
+    private invoiceservice: InvoiceService,
+    private titleService: Title,
 
 
-        
-      ) {
-        this.pTableName = 'Invoice';
-        this.pScreenId = 46;
-        this.pTableId = 46;
-        this.recordsPerPage = 10;
-        this.currentPageIndex = 1;
-        this.menuId = 1019106011;
-      }
+
+  ) {
+    this.pTableName = 'Invoice';
+    this.pScreenId = 46;
+    this.pTableId = 46;
+    this.recordsPerPage = 10;
+    this.currentPageIndex = 1;
+    this.menuId = 1019106011;
+  }
 
   ngOnInit() {
     this.titleService.setTitle("Invoice - Pablo");
@@ -134,12 +134,12 @@ export class InvoiceComponent implements OnInit {
     }
     this._cf.setSort("")
     this._cf.setFilter("")
-      this.refreshMe();
+    this.refreshMe();
   }
 
   refreshMe() {
-    
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header = "POS"
       this.invoiceNo = "Invoice No."
@@ -149,8 +149,8 @@ export class InvoiceComponent implements OnInit {
       this.edit = "Edit"
       this.report = "Report"
       this.delete = "Delete"
-      
-    }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
+
+    } else if (localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       this.direction = "rtl"
       this.header = "POS"
       this.invoiceNo = "الفاتورة"
@@ -158,26 +158,26 @@ export class InvoiceComponent implements OnInit {
       this.customer = "العميل"
       this.warehouse = "المخزن"
       this.delete = "حذف"
-    //   this.nameT = "الاسم"
-    //  this.amount = "المبلغ"
-    //  this.statusT = "الحالة"
+      //   this.nameT = "الاسم"
+      //  this.amount = "المبلغ"
+      //  this.statusT = "الحالة"
       this.edit = "تعديل"
       this.report = "تقرير "
-      
+
     }
 
-    
+
     this.pageData.sort = this._cf.sortVar
     this.pageData.filter = this._cf.filterVar
 
-    this._ui.loadingStateChanged.next(true);
-    this._cf.newGetPageData(this.pTableName, this.pageData).subscribe((result) => {
-      this._ui.loadingStateChanged.next(false);
-      this.totalRecords = result[0].totalRecords;
-          this.recordsPerPage = this.recordsPerPage;
-          this.dataSource = new MatTableDataSource(result);
-          this.indexes = result
-    })
+    // this._ui.loadingStateChanged.next(true);
+    // this._cf.newGetPageData(this.pTableName, this.pageData).subscribe((result) => {
+    //   this._ui.loadingStateChanged.next(false);
+    //   this.totalRecords = result[0].totalRecords;
+    //       this.recordsPerPage = this.recordsPerPage;
+    //       this.dataSource = new MatTableDataSource(result);
+    //       this.indexes = result
+    // })
     // this._cf.getPageData('Invoice', this.pScreenId, this._auth.getUserId(), this.pTableId,
     //   this.recordsPerPage, this.currentPageIndex, false).subscribe(
     //     (result) => {
@@ -217,13 +217,13 @@ export class InvoiceComponent implements OnInit {
     this._cf.newGetPageData(this.pTableName, this.pageData).subscribe((result) => {
       this._ui.loadingStateChanged.next(false);
       this.totalRecords = result[0].totalRecords;
-          this.recordsPerPage = this.recordsPerPage;
-          this.dataSource = new MatTableDataSource(result);
-          this.indexes = result
+      this.recordsPerPage = this.recordsPerPage;
+      this.dataSource = new MatTableDataSource(result);
+      this.indexes = result
     })
     this.paginator.firstPage()
   }
-  
+
   onClearFilter() {
     this.pageData.filter = ""
     // this.invoiceservice.setSort("")
@@ -232,50 +232,50 @@ export class InvoiceComponent implements OnInit {
     this._cf.newGetPageData(this.pTableName, this.pageData).subscribe((result) => {
       this._ui.loadingStateChanged.next(false);
       this.totalRecords = result[0].totalRecords;
-          this.recordsPerPage = this.recordsPerPage;
-          this.dataSource = new MatTableDataSource(result);
-          this.indexes = result
+      this.recordsPerPage = this.recordsPerPage;
+      this.dataSource = new MatTableDataSource(result);
+      this.indexes = result
     })
     this.paginator.firstPage()
   }
-  onMySort   () {
-    
-      const dialogRef = this.dialog.open(MySortComponent, {
-        disableClose: true,
-        data: {
-          tableId: 46,
-          recordId: 0,
-          userId: 26,
-          roleId: 2,
-          languageId:  Number(localStorage.getItem(this._globals.baseAppName + '_language'))
-        }
-      });
-    
-    dialogRef.afterClosed().subscribe(() => {
-      this.refreshMe();
-    });
-    this.paginator.firstPage()
-  }
-  
-  onMyFilter   () {
+  onMySort() {
 
-      const dialogRef = this.dialog.open(MyFilterComponent, {
-        disableClose: true,
-        data: {
-          tableId: 46,
-          recordId: 0,
-          userId: 26,
-          roleId: 2,
-          languageId:  Number(localStorage.getItem(this._globals.baseAppName + '_language'))
-        }
-      });
-    
+    const dialogRef = this.dialog.open(MySortComponent, {
+      disableClose: true,
+      data: {
+        tableId: 46,
+        recordId: 0,
+        userId: 26,
+        roleId: 2,
+        languageId: Number(localStorage.getItem(this._globals.baseAppName + '_language'))
+      }
+    });
+
     dialogRef.afterClosed().subscribe(() => {
       this.refreshMe();
     });
     this.paginator.firstPage()
   }
-  onReport(invId:number) { 
+
+  onMyFilter() {
+
+    const dialogRef = this.dialog.open(MyFilterComponent, {
+      disableClose: true,
+      data: {
+        tableId: 46,
+        recordId: 0,
+        userId: 26,
+        roleId: 2,
+        languageId: Number(localStorage.getItem(this._globals.baseAppName + '_language'))
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.refreshMe();
+    });
+    this.paginator.firstPage()
+  }
+  onReport(invId: number) {
     this.opC = false
     var reportId: number
     reportId = 6
@@ -286,31 +286,31 @@ export class InvoiceComponent implements OnInit {
     // }else if (report == "Rev vs. Exp") {
     //   reportId = 5; // if expense button: 3, Revenue: 4, RevVsExp: 5 
     // }
-    
-    let restOfUrl: string; 
-    restOfUrl = 'invoiceid=' + invId; 
-     
+
+    let restOfUrl: string;
+    restOfUrl = 'invoiceid=' + invId;
+
     console.log(restOfUrl)
-    this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl }); 
+    this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl });
     this._nav.onClickListItem('FRP');
   }
 
-  onDelete(idAC:number) { 
+  onDelete(idAC: number) {
     if (this.role != '10') {
-    this.opC = false
-    this.deleteModel = {
-      name: this.pTableName,
-      id: idAC
+      this.opC = false
+      this.deleteModel = {
+        name: this.pTableName,
+        id: idAC
+      }
+      this.openConfirmDialog(this.deleteModel)
+      // this._ui.loadingStateChanged.next(true);
+      // this.invoiceservice.getDelete(id).subscribe((result) => {
+      //   this._ui.loadingStateChanged.next(false);
+      //   this.refreshMe();
+      // })
+    } else {
+      this.alertify.error("Not allowed to do such action")
     }
-    this.openConfirmDialog(this.deleteModel)
-    // this._ui.loadingStateChanged.next(true);
-    // this.invoiceservice.getDelete(id).subscribe((result) => {
-    //   this._ui.loadingStateChanged.next(false);
-    //   this.refreshMe();
-    // })
-  }else {
-    this.alertify.error("Not allowed to do such action")
-  }
   }
 
   applyFilter(filterValue: string) {
@@ -320,11 +320,11 @@ export class InvoiceComponent implements OnInit {
   paginatoryOperation(event: PageEvent) {
     try {
       this.pageData.sort = this._cf.sortVar
-    this.pageData.filter = this._cf.filterVar
+      this.pageData.filter = this._cf.filterVar
       this.pageData.recordsPerPage = event.pageSize
       this._cf.newGetPageDataOnPaginatorOperation(event, this.pTableName, this.pScreenId, this._auth.getUserId(),
-        this.pTableId, this.totalRecords, 
-        this.pageData.sort, 
+        this.pTableId, this.totalRecords,
+        this.pageData.sort,
         this.pageData.filter).subscribe(
           (result: any) => {
             this._ui.loadingStateChanged.next(false);
@@ -348,14 +348,14 @@ export class InvoiceComponent implements OnInit {
       //       this._msg.showAPIError(error);
       //       return false;
       //     });
-    } catch (error:any) {
+    } catch (error: any) {
       this._ui.loadingStateChanged.next(false);
       this._msg.showAPIError(error);
       return false;
     }
   }
 
-  onSort   () {
+  onSort() {
     const dialogRef = this.dialog.open(PageSortComponent, {
       disableClose: true,
       data: this.pTableId
@@ -365,20 +365,20 @@ export class InvoiceComponent implements OnInit {
     });
   };
 
-  onAdd   () {
+  onAdd() {
     this.model = {
       tableId: 46,
       recordId: 0,
       userId: 26,
       roleId: 2,
-      languageId:  Number(localStorage.getItem(this._globals.baseAppName + '_language'))
+      languageId: Number(localStorage.getItem(this._globals.baseAppName + '_language'))
     };
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Add invoice");
-    }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
+    } else if (localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "اضافة فاتورة");
     }
-    
+
     this.openEntry2(this.model);
   };
 
@@ -394,34 +394,34 @@ export class InvoiceComponent implements OnInit {
 
   onEdit = (id: number) => {
     if (this.role != '10') {
-      if(this.opC == true) {
+      if (this.opC == true) {
         this.model = {
           tableId: 46,
           recordId: id,
           userId: 26,
           roleId: 2,
-          languageId:  Number(localStorage.getItem(this._globals.baseAppName + '_language'))
+          languageId: Number(localStorage.getItem(this._globals.baseAppName + '_language'))
         };
-        if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
           localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Edit invoice");
           localStorage.setItem(this._globals.baseAppName + '_Add&Edit2', "Edit");
-        }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
+        } else if (localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
           localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "تعديل فاتورة");
           localStorage.setItem(this._globals.baseAppName + '_Add&Edit2', "Edit");
         }
-        
+
         this.openEntry2(this.model)
-      }else {
+      } else {
         this._ui.loadingStateChanged.next(false);
         this.opC = true
       }
-    }else {
+    } else {
       this.alertify.error("Not allowed to do such action")
     }
   }
 
 
-  
+
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -430,23 +430,25 @@ export class InvoiceComponent implements OnInit {
   }
   masterToggle() {
     this.isAllSelected() ?
-        (this.selection.clear() ,this.clickedRows.clear()):
-        (this.selection.clear(), this.dataSource.data.forEach((row:any) => {this.selection.select(row); if (!this.clickedRows.has(row)) {
+      (this.selection.clear(), this.clickedRows.clear()) :
+      (this.selection.clear(), this.dataSource.data.forEach((row: any) => {
+        this.selection.select(row); if (!this.clickedRows.has(row)) {
 
           this.clickedRows.add(row)
-        }}))
+        }
+      }))
   }
 
-  onId(id: number, row:InvoiceModel) {
-    
+  onId(id: number, row: InvoiceModel) {
+
     if (this.clickedRows.has(row)) {
       this.clickedRows.delete(row)
-    }else {
+    } else {
       this.clickedRows.add(row)
     }
 
   }
-  openEntry   (result: InvoiceModel) {
+  openEntry(result: InvoiceModel) {
     if (result === undefined) {
       const dialogRef = this.dialog.open(InvoiceEntryComponent, {
         disableClose: true,
@@ -465,14 +467,14 @@ export class InvoiceComponent implements OnInit {
       });
     }
   };
-  openEntry2   (result: Send) {
+  openEntry2(result: Send) {
     if (result === undefined) {
       const dialogRef = this.dialog.open(InvoiceEntryComponent, {
         disableClose: true,
         maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%',
         data: {}
       });
       dialogRef.afterClosed().subscribe(() => {
@@ -482,9 +484,9 @@ export class InvoiceComponent implements OnInit {
       const dialogRef = this.dialog.open(InvoiceEntryComponent, {
         disableClose: true,
         maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%',
         data: result
       });
       dialogRef.afterClosed().subscribe(() => {
@@ -493,11 +495,11 @@ export class InvoiceComponent implements OnInit {
     }
   };
 
-  openConfirmDialog  (result: DeleteModel) {
+  openConfirmDialog(result: DeleteModel) {
     if (result === undefined) {
       const dialogRef = this.dialog.open(CheckfordeleteComponent, {
         disableClose: true,
-        
+
         data: {}
       });
       dialogRef.afterClosed().subscribe(() => {
@@ -506,7 +508,7 @@ export class InvoiceComponent implements OnInit {
     } else {
       const dialogRef = this.dialog.open(CheckfordeleteComponent, {
         disableClose: true,
-        
+
         data: result
       });
       dialogRef.afterClosed().subscribe(() => {
