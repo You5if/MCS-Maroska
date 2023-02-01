@@ -7,6 +7,7 @@ import { AppGlobals } from '../app.global';
 import { SelectService } from '../components/common/select.service';
 import { MessageBoxService } from '../components/messagebox/message-box.service';
 import { SelectModel } from '../components/misc/SelectModel';
+import { AuthService } from '../components/security/auth/auth.service';
 import { Send } from '../send.model';
 import { AccountService } from '../system/account/system-account/account.service';
 
@@ -38,7 +39,7 @@ export class DynamicFormComponent implements OnInit {
       companyId: 10001,
       branchId: 201,
       financialYearId: 1,
-      userId: 1,
+      userId: Number(this._auth.getUserId()),
       mACAddress: "unidentified",
       hostName: "unidentified",
       iPAddress: "unidentified",
@@ -735,6 +736,7 @@ export class DynamicFormComponent implements OnInit {
 
   constructor( private dapiService: AccountService,
     private _globals: AppGlobals,
+    private _auth: AuthService,
       private _select: SelectService,
       
       ) {}
@@ -1185,7 +1187,7 @@ export class DynamicFormComponent implements OnInit {
       console.log(this.last)
       // this.dapiService.accountEntryA(this.last).subscribe(nexto => {
       //   this.res = nexto;
-      //   if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+      //       if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       //     this._msg.showInfo("Message", "Account saved succesfully");
       //   this.dialogRef.close();
       //   }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
@@ -1197,7 +1199,7 @@ export class DynamicFormComponent implements OnInit {
       // }
       // , error => {
       //   console.log(error);
-      //   if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+      //       if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       //     this._msg.showInfo("Message", "Error!!");
       //   this.dialogRef.close();
       //   }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
@@ -1211,7 +1213,7 @@ export class DynamicFormComponent implements OnInit {
       console.log(this.last)
       // this.dapiService.accountEntryE(this.last).subscribe(nexto => {
       //   this.res = nexto;
-      //   if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+      //       if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       //     this._msg.showInfo("Message", "Account saved succesfully");
       //   this.dialogRef.close();
       //   }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
@@ -1221,7 +1223,7 @@ export class DynamicFormComponent implements OnInit {
 
       // }, error => {
       //   console.log(error);
-      //   if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+      //       if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       //     this._msg.showInfo("Message", "Error!!");
       //   this.dialogRef.close();
       //   }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {

@@ -35,11 +35,19 @@ export class AccountService {
            }
 
         accountEntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'Account/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'Account/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         accountEntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'Account/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'Account/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
 

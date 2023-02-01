@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/components/security/auth/auth.service';
 import { InvoiceEntryComponent } from './invoice-entry/invoice-entry.component';
 import { DeleteModel, InvoiceModel } from './invoice.model';
 import { RightModel } from 'src/app/components/security/auth/rights.model';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { PageSortComponent } from 'src/app/components/common/pageevents/page-sort/page-sort.component';
 import { InvoiceService } from './invoice.service';
 import { SelectModel } from 'src/app/components/misc/SelectModel';
@@ -37,7 +37,14 @@ import { Direction } from '@angular/cdk/bidi';
 export class InvoiceComponent implements OnInit {
 
   idS!: number;
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
   customerCode!: string;
   customerName!: string;
   customerMobile!: string;
@@ -59,8 +66,7 @@ export class InvoiceComponent implements OnInit {
   deleteModel!: DeleteModel
 
   model!: Send;
-  displayedColumns: string[] =
-    ['select', 'InvoiceNo', 'InvoiceDate', 'report', 'delete'];
+  displayedColumns: string[] 
 
   dataSource: any;
   isLastPage = false;
@@ -103,6 +109,7 @@ export class InvoiceComponent implements OnInit {
     private _report: ReportPageService,
     private _ui: UIService,
     private _globals: AppGlobals,
+    private router: Router,
     private _msg: MessageBoxService,
     private alertify: AlertifyService,
     public _nav: SystemNavigationComponent,
@@ -123,7 +130,12 @@ export class InvoiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle("Invoice - Pablo");
+    if (this.role === '3') {
+      this.displayedColumns = ['InvoiceNo', 'InvoiceDate', 'report'];
+    }else {
+      this.displayedColumns = ['InvoiceNo', 'InvoiceDate', 'report', 'delete'];
+    }
+    this.titleService.setTitle("Invoice - Maroska");
     this.pageData = {
       tableId: this.pTableId,
       userId: 26,
@@ -138,7 +150,12 @@ export class InvoiceComponent implements OnInit {
   }
 
   refreshMe() {
-
+        this.workShimmerBtn = true
+    this.workShimmerHeader = true
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
+    this.workShimmerPaginator = true
     if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header = "POS"
@@ -149,6 +166,11 @@ export class InvoiceComponent implements OnInit {
       this.edit = "Edit"
       this.report = "Report"
       this.delete = "Delete"
+      if (this.role === '3') {
+        this.headerToShow = [this.invoiceNo, this.invoiceDate,this.report]
+      }else {
+        this.headerToShow = [this.invoiceNo, this.invoiceDate,this.report, this.delete]
+      }
 
     } else if (localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       this.direction = "rtl"
@@ -163,7 +185,11 @@ export class InvoiceComponent implements OnInit {
       //  this.statusT = "الحالة"
       this.edit = "تعديل"
       this.report = "تقرير "
-
+      if (this.role === '3') {
+        this.headerToShow = [this.invoiceNo, this.invoiceDate,this.report]
+      }else {
+        this.headerToShow = [this.invoiceNo, this.invoiceDate,this.report, this.delete]
+      }
     }
 
 
@@ -171,13 +197,19 @@ export class InvoiceComponent implements OnInit {
     this.pageData.filter = this._cf.filterVar
 
     // this._ui.loadingStateChanged.next(true);
-    // this._cf.newGetPageData(this.pTableName, this.pageData).subscribe((result) => {
-    //   this._ui.loadingStateChanged.next(false);
-    //   this.totalRecords = result[0].totalRecords;
-    //       this.recordsPerPage = this.recordsPerPage;
-    //       this.dataSource = new MatTableDataSource(result);
-    //       this.indexes = result
-    // })
+    this._cf.newGetPageData(this.pTableName, this.pageData).subscribe((result) => {
+      // this._ui.loadingStateChanged.next(false);
+      this.workShimmerBtn = false
+          this.workShimmerHeader = false
+    this.workShimmerTable = false
+    this.workShimmerCard = false
+    this.workShimmerCardBtn = false
+    this.workShimmerPaginator = false
+      this.totalRecords = result[0].totalRecords;
+          this.recordsPerPage = this.recordsPerPage;
+          this.dataSource = new MatTableDataSource(result);
+          this.indexes = result
+    })
     // this._cf.getPageData('Invoice', this.pScreenId, this._auth.getUserId(), this.pTableId,
     //   this.recordsPerPage, this.currentPageIndex, false).subscribe(
     //     (result) => {
@@ -292,7 +324,7 @@ export class InvoiceComponent implements OnInit {
 
     console.log(restOfUrl)
     this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl });
-    this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/report']);
   }
 
   onDelete(idAC: number) {
@@ -318,6 +350,9 @@ export class InvoiceComponent implements OnInit {
   }
 
   paginatoryOperation(event: PageEvent) {
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
     try {
       this.pageData.sort = this._cf.sortVar
       this.pageData.filter = this._cf.filterVar
@@ -327,29 +362,32 @@ export class InvoiceComponent implements OnInit {
         this.pageData.sort,
         this.pageData.filter).subscribe(
           (result: any) => {
-            this._ui.loadingStateChanged.next(false);
+            this.workShimmerTable = false
+    this.workShimmerCard = false
+    this.workShimmerCardBtn = false
+            // this._ui.loadingStateChanged.next(false);
             this.totalRecords = result[0].totalRecords;
             this.recordsPerPage = event.pageSize;
             this.dataSource = result;
           }, error => {
-            this._ui.loadingStateChanged.next(false);
+            // this._ui.loadingStateChanged.next(false);
             this._msg.showAPIError(error);
             return false;
           });
       // this._cf.getPageDataOnPaginatorOperation(event, this.pTableName, this.pScreenId, this._auth.getUserId(),
       //   this.pTableId, this.totalRecords).subscribe(
-      //     (result: InvoiceModel) => {
-      //       this._ui.loadingStateChanged.next(false);
+      //     (result: JournalEntryModel) => {
+            // this._ui.loadingStateChanged.next(false);
       //       this.totalRecords = result[0].totalRecords;
       //       this.recordsPerPage = event.pageSize;
       //       this.dataSource = result;
       //     }, error => {
-      //       this._ui.loadingStateChanged.next(false);
+            // this._ui.loadingStateChanged.next(false);
       //       this._msg.showAPIError(error);
       //       return false;
       //     });
     } catch (error: any) {
-      this._ui.loadingStateChanged.next(false);
+      // this._ui.loadingStateChanged.next(false);
       this._msg.showAPIError(error);
       return false;
     }
@@ -393,7 +431,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   onEdit = (id: number) => {
-    if (this.role != '10') {
+    if (this.role != '3') {
       if (this.opC == true) {
         this.model = {
           tableId: 46,

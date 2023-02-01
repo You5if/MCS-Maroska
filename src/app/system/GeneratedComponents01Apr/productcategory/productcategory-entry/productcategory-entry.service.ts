@@ -33,11 +33,19 @@ export class ProductCategoryEntryService {
            }
 
            productCatEntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'ProductCategory/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'ProductCategory/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         productCatEntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'ProductCategory/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'ProductCategory/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         
 

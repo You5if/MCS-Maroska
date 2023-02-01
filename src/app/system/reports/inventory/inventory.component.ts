@@ -54,8 +54,9 @@ export class InventoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Inventory reports - Pablo");
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+    this.titleService.setTitle("Inventory reports - Maroska");
+        
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header1 = "Stock reports"
       this.header2 = "Products reports"
@@ -85,7 +86,7 @@ export class InventoryComponent implements OnInit {
     const reportId:number = 15
   
     this._report.passReportData({ reportId: reportId}); 
-    this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/Reports']);
   }
   onFetch() { 
     const reportId:number = 14
@@ -95,7 +96,7 @@ export class InventoryComponent implements OnInit {
     restOfUrl = 'productid=' + this.productId; 
     console.log(restOfUrl)
     this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl }); 
-    this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/Reports']);
   }
   // onProfile() { 
   //   const reportId:number = 14
@@ -105,7 +106,7 @@ export class InventoryComponent implements OnInit {
   //   restOfUrl = 'productid=' + this.customerId; 
   //   console.log(restOfUrl)
   //   this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl }); 
-  //   this._nav.onClickListItem('FRP');
+  //   this.router.navigate(['System/Reports']);
   // }
 
   onChangeCustomer(id: number) {

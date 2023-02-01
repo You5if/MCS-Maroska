@@ -321,7 +321,7 @@
       </mat-grid-list>
     </div>
 
-    <div fxLayout="column" fxLayoutGap="10px" class="cardContainer">
+    <div fxLayout="column" fxLayoutGap="5px" class="cardContainer">
       <div
         fxLayout="column"
         class="{{breakpoint < 1350 ? 'card2' : 'card'}}"
@@ -361,7 +361,7 @@
                   </div>
                 </div>
               </mat-grid-tile>
-              <mat-grid-tile *ngSwitchCase="'Number'">
+              <mat-grid-tile [colspan]="0.5" *ngSwitchCase="'Number'">
                 <div [ngSwitch]="source.access">
                   <mat-form-field
                     *ngSwitchCase="'Editable'"
@@ -403,7 +403,18 @@
                     class="radio"
                   >
                     <h3>{{ source.label }}:</h3>
-                    <h5 class="totalDynamic">{{ source.value }}</h5>
+                    <h3 class="totalDynamic">{{ source.value }}</h3>
+                    <!-- <button mat-icon-button class="deleteBtn" type="button" (click)="deleteFun(i)">
+                      <mat-icon
+                        small
+                        class="mat-icon material-icons"
+                        role="img"
+                        aria-hidden="true"
+                        color="warn"
+                      >
+                        delete
+                      </mat-icon>
+                    </button> -->
                   </div>
                 </div>
               </mat-grid-tile>
@@ -551,10 +562,10 @@
                 </div>
               </div>
             </mat-grid-tile> -->
-              <mat-grid-tile *ngSwitchCase="'autocomplete'">
-                <div [ngSwitch]="source.access">
-                  <div *ngSwitchCase="'Editable'">
-                    <app-my-test-auto
+              <mat-grid-tile [colspan]="5.5" *ngSwitchCase="'autocomplete'">
+                <div class="autoWidth2" [ngSwitch]="source.access">
+                  <div class="autoWidth"  *ngSwitchCase="'Editable'">
+                    <app-my-test-auto class="autoWidth2" 
                       [refId]="source.refId"
                       [refCondition]="source.refCondition"
                       [refTable]="source.refTable"

@@ -27,7 +27,14 @@ export class JournalEntryEntryComponent implements OnInit {
   url!: string;
   dialog_title: string|null = localStorage.getItem(this._globals.baseAppName + '_Add&Edit');
 
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
   reference!: string;
   dated!: string;
   currency!: string;
@@ -106,7 +113,7 @@ elemSource = new MatTableDataSource(this.elem);
 
   ngOnInit() {
 
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       
       this.direction = "ltr"
       this.reference = "Reference"
@@ -648,45 +655,22 @@ elemSource = new MatTableDataSource(this.elem);
           this._myService.getJournalEntrySubmit(this.pModel)!.subscribe((result: APIResultModel) => {
               if (result.errorNo === 0) {
                   this._ui.loadingStateChanged.next(false);
-                  if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-                    this._msg.showInfo("Message", "Saved succesfully");
+                  this._msg.showInfo("Success", result.errorMessage);
                   this.dialogRef.close();
-                  }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-                    this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
-                  this.dialogRef.close();
-                  }
               } else {
                   this._ui.loadingStateChanged.next(false);
-                  if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-                    this._msg.showInfo("Message", "Error!!");
+                  this._msg.showInfo("Error", result.errorMessage);
                   this.dialogRef.close();
-                  }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-                    
-                    this._msg.showInfo("رسالة", "توجد مشكلة");
-                  this.dialogRef.close();
-                  }
               }
           }, error => {
               this._ui.loadingStateChanged.next(false);
-              if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-                this._msg.showInfo("Message", "Error!!");
-              this.dialogRef.close();
-              }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-                
-                this._msg.showInfo("رسالة", "توجد مشكلة");
-              this.dialogRef.close();
-              }
+                  this._msg.showInfo("Error", error.errorMessage);
+            this.dialogRef.close();
             });
-      } catch (error) {
+      } catch (error:any) {
           this._ui.loadingStateChanged.next(false);
-          if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-            this._msg.showInfo("Message", "Error!!");
+          this._msg.showInfo("Error", error.errorMessage);
           this.dialogRef.close();
-          }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-            
-            this._msg.showInfo("رسالة", "توجد مشكلة");
-          this.dialogRef.close();
-          }
       }
         
         

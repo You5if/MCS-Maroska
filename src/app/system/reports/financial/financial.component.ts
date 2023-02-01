@@ -31,7 +31,14 @@ import { Direction } from '@angular/cdk/bidi';
 export class FinancialComponent implements OnInit {
 
   idS! : number;
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
   accountCode!: string;
   accountName!: string;
   accountType!: string;
@@ -99,12 +106,18 @@ export class FinancialComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Financial reports - Pablo");
+    this.titleService.setTitle("Financial reports - Maroska");
       this.refreshMe();
   }
 
   refreshMe() {
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        this.workShimmerBtn = true
+    this.workShimmerHeader = true
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
+    this.workShimmerPaginator = true
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header = "Account"
       this.accountCode = "Account Code"
@@ -187,25 +200,31 @@ export class FinancialComponent implements OnInit {
     restOfUrl = restOfUrl + '&currency=' + currency; 
     console.log(restOfUrl)
     this._report.passReportData({ reportId: reportId!, restOfUrl: restOfUrl }); 
-    this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/Reports']);
   }
  
   paginatoryOperation(event: PageEvent) {
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
     try {
       this._cf.getPageDataOnPaginatorOperation(event, this.pTableName, this.pScreenId, this._auth.getUserId(),
         this.pTableId, this.totalRecords).subscribe(
           (result: any) => {
-            this._ui.loadingStateChanged.next(false);
+            this.workShimmerTable = false
+    this.workShimmerCard = false
+    this.workShimmerCardBtn = false
+            // this._ui.loadingStateChanged.next(false);
             this.totalRecords = result[0].totalRecords;
             this.recordsPerPage = event.pageSize;
             this.dataSource = result;
           }, error => {
-            this._ui.loadingStateChanged.next(false);
+            // this._ui.loadingStateChanged.next(false);
             this._msg.showAPIError(error);
             return false;
           });
     } catch (error:any) {
-      this._ui.loadingStateChanged.next(false);
+      // this._ui.loadingStateChanged.next(false);
       this._msg.showAPIError(error);
       return false;
     }
@@ -226,7 +245,7 @@ export class FinancialComponent implements OnInit {
   //     roleId: 2,
   //     languageId: Number(localStorage.getItem(this._globals.baseAppName + '_language'))
   //   };
-  //   if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+  //       if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
   //     localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Add account");
   //   }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
   //     localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "اضافة حساب");
@@ -261,7 +280,7 @@ export class FinancialComponent implements OnInit {
   //     roleId: 2,
   //     languageId: Number(localStorage.getItem(this._globals.baseAppName + '_language'))
   //   };
-  //   if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+  //       if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
   //     localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Edit account");
   //   }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
   //     localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "تعديل حساب");

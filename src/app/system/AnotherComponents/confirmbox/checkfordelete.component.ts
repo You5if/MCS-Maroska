@@ -81,25 +81,25 @@ export class ConfBoxComponent implements OnInit {
       console.log('Last:', JSON.stringify(this.data2.arr));
      this.dapiService.getSubmit(this.data2.name, 'createuniv', this.data2.arr).subscribe(nexto => {
        this.res = nexto;
-       if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-        this._msg.showInfo("Message", "Saved succesfully");
-      this.dialogRef.close();
+           if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+            this._msg.showInfo("Success", this.res.errorMessage);
+            this.dialogRef.close();
       localStorage.setItem(this._globals.baseAppName + '_Confirm', 'yes')
       }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-        this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
+        this._msg.showInfo("Success", this.res.errorMessage);
         localStorage.setItem(this._globals.baseAppName + '_Confirm', 'yes')
       this.dialogRef.close();
       }
 
      }, error => {
        console.log(error);
-       if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-        this._msg.showInfo("Message", "Error!!");
+           if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+            this._msg.showInfo("Error", error.errorMessage);
         localStorage.setItem(this._globals.baseAppName + '_Confirm', 'no')
       this.dialogRef.close();
       }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
         
-        this._msg.showInfo("رسالة", "توجد مشكلة");
+        this._msg.showInfo("Error", error.errorMessage);
         localStorage.setItem(this._globals.baseAppName + '_Confirm', 'no')
       this.dialogRef.close();
       }
@@ -107,25 +107,25 @@ export class ConfBoxComponent implements OnInit {
    }else if(this.data2.arr.records[0].entryMode == "E"){
      this.dapiService.getSubmit(this.data2.name, 'edituniv', this.data2.arr).subscribe(nexto => {
        this.res = nexto;
-       if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-        this._msg.showInfo("Message", "Saved succesfully");
+           if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+            this._msg.showInfo("Success", this.res.errorMessage);
         localStorage.setItem(this._globals.baseAppName + '_Confirm', 'yes')
       this.dialogRef.close();
       }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-        this._msg.showInfo("رسالة", "تم حفظ بنجاح");
+        this._msg.showInfo("Success", this.res.errorMessage);
         localStorage.setItem(this._globals.baseAppName + '_Confirm', 'yes')
       this.dialogRef.close();
       }
 
      }, error => {
        console.log(error);
-       if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-        this._msg.showInfo("Message", "Error!!");
+           if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+            this._msg.showInfo("Error", error.errorMessage);
         localStorage.setItem(this._globals.baseAppName + '_Confirm', 'no')
       this.dialogRef.close();
       }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
         
-        this._msg.showInfo("خطأ!!", "توجد مشكلة");
+        this._msg.showInfo("Error", error.errorMessage);
         localStorage.setItem(this._globals.baseAppName + '_Confirm', 'no')
       this.dialogRef.close();
       }

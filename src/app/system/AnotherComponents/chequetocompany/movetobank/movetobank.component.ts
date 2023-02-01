@@ -22,7 +22,14 @@ export class MovetobankComponent implements OnInit {
   submit!: string;
   disabled: boolean = true
     cancel!: string;
-    direction!: Direction;
+    workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
+  direction!: Direction;
+  headerToShow: any[] = []
     header!: string;
     banks!: SelectModel[];
     bankAccountId!: number
@@ -49,7 +56,7 @@ export class MovetobankComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.submit = "Apply"
       this.cancel = "Cancel"

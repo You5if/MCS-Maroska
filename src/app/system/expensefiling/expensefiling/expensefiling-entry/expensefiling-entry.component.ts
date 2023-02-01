@@ -25,7 +25,14 @@ import { Direction } from '@angular/cdk/bidi';
 export class ExpenseFilingEntryComponent implements OnInit {
   url!: string;
   dialog_title: string|null = localStorage.getItem(this._globals.baseAppName + '_Add&Edit');
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
   entryDate!: string;
   currency!: string;
   fromAcc!: string;
@@ -91,7 +98,7 @@ expenseFilingTaxDataSource = new MatTableDataSource(this.expenseFilingTaxData);
   ngOnInit() {
     event!.preventDefault()
 
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       
       this.direction = "ltr"
       this.entryDate = "Entry Date"
@@ -460,45 +467,22 @@ this._select.getDropdown('miscdetailid','miscdetail','misctext','miscid=18',fals
           this._myService.getExpenseFilingSubmit(form)!.subscribe((result: APIResultModel) => {
               if (result.errorNo === 0) {
                   this._ui.loadingStateChanged.next(false);
-                  if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-                    this._msg.showInfo("Message", "Saved succesfully");
+                  this._msg.showInfo("Success", result.errorMessage);
                   this.dialogRef.close();
-                  }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-                    this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
-                  this.dialogRef.close();
-                  }
               } else {
                   this._ui.loadingStateChanged.next(false);
-                  if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-                    this._msg.showInfo("Message", "Error!!");
+                  this._msg.showInfo("Error", result.errorMessage);
                   this.dialogRef.close();
-                  }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-
-                    this._msg.showInfo("رسالة", "توجد مشكلة");
-                  this.dialogRef.close();
-                  }
               }
           }, error => {
               this._ui.loadingStateChanged.next(false);
-              if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-                this._msg.showInfo("Message", "Error!!");
+              this._msg.showInfo("Error", error.errorMessage);
               this.dialogRef.close();
-              }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-
-                this._msg.showInfo("رسالة", "توجد مشكلة");
-              this.dialogRef.close();
-              }
             });
       } catch (error:any) {
           this._ui.loadingStateChanged.next(false);
-          if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-            this._msg.showInfo("Message", "Error!!");
+          this._msg.showInfo("Error", error.errorMessage);
           this.dialogRef.close();
-          }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-
-            this._msg.showInfo("رسالة", "توجد مشكلة");
-          this.dialogRef.close();
-          }
       }
   };
 

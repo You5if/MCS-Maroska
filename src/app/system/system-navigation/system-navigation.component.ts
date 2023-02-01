@@ -1,11 +1,14 @@
 import { Direction } from '@angular/cdk/bidi';
 import { Component, OnInit } from '@angular/core';
 import { StyleDirective } from '@angular/flex-layout';
+import { MatDialog } from '@angular/material/dialog';
 import { matDrawerAnimations } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 import { ResizeEvent } from 'angular-resizable-element';
 import { AppGlobals } from 'src/app/app.global';
 import { AuthService } from 'src/app/components/security/auth/auth.service';
 import { LoginModule } from 'src/app/components/security/auth/login/login.model';
+import { ChangePasswordNewComponent } from '../change-password/change-password.component';
 
 @Component({
   selector: 'app-system-navigation',
@@ -15,6 +18,9 @@ import { LoginModule } from 'src/app/components/security/auth/login/login.model'
 export class SystemNavigationComponent implements OnInit {
 
   showFiller = false;
+  openPanel1: boolean;
+  openPanel2: boolean;
+  openPanel3: boolean;
   showButton: boolean = false;
   key!: number;
   lang: string = "Arabic";
@@ -72,6 +78,7 @@ export class SystemNavigationComponent implements OnInit {
   financialReports!: string;
   salesReports!: string;
   purchaseReports!: string;
+  changePassword!: string;
   inventoryReports!: string;
   resizeStyle: object = {};
 
@@ -88,16 +95,34 @@ export class SystemNavigationComponent implements OnInit {
     'loginType': 1
   }
   forexManagement: string;
+  userName: any;
+  userEmail: any;
+  openPanel4: boolean;
+  openPanel5: boolean;
+  openPanel6: boolean;
 
   constructor(private _globals: AppGlobals,
-    private _auth: AuthService,) { }
+    public dialog: MatDialog,
+    private _auth: AuthService,
+    private router: Router,) { }
     
 
 
 ngOnInit(): void {
 
+  this.openPanel1 = false
+  this.openPanel2 = false
+  this.openPanel3 = false
+  this.openPanel4 = false
+  this.openPanel5 = false
+  this.openPanel6 = false
+
+  this.userName = this._auth.getUserName();
+  this.userEmail = this._auth.getUniqueName();
+
   this.role = localStorage.getItem("role");
   console.log(this.role);
+  this.userName = this._auth.getUserName()
   
 
   this.resizeStyle = {
@@ -117,6 +142,7 @@ ngOnInit(): void {
       this.bankAccount = "Bank account"
       this.forexManagement = "Forex management"
       this.reports = "Reports"
+      this.changePassword = "Change password"
       this.paymentFromCompany = "Payment to supplier"
       this.paymentToCompany = "Customer payment"
       this.accountConfiguration = "Account configuration"
@@ -155,252 +181,7 @@ ngOnInit(): void {
       this.cheque2 = "Cheque from"
       this.logout = "Logout"
       this.change = "Language:"
-  if (localStorage.getItem(this._globals.baseAppName + '_nav') == "") {
-    this.navigation = "Home"
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-    this.onClickListItem('H')
-    
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Home") {
-    this.key = 0
-    this.navigation = "Home"
-    this.onClickListItem('H')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "BusinessProfile") {
-    this.key = 1
-    this.navigation = "BusinessProfile"
-    this.onClickListItem('BP')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "JournalEntry") {
-    this.key = 2
-    this.navigation = "JournalEntry"
-    this.onClickListItem('J')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Expense") {
-    this.key = 3
-    this.navigation = "Expense"
-    this.onClickListItem('E')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Tax") {
-    this.key = 4
-    this.navigation = "Tax"
-    this.onClickListItem('T')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Forex") {
-    this.key = 5
-    this.navigation = "Forex"
-    this.onClickListItem('F')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProExpense") {
-    this.key = 5
-    this.navigation = "ProExpense"
-    this.onClickListItem('PEX')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProExpense") {
-    this.key = 5
-    this.navigation = "ProInv"
-    this.onClickListItem('PIN')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProExpenseList") {
-    this.key = 5
-    this.navigation = "ProExpenseList"
-    this.onClickListItem('PEXL')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Account") {
-    this.key = 6
-    this.navigation = "Account"
-    this.onClickListItem('A')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "AccountConfig") {
-    this.key = 7
-    this.navigation = "AccountConfig"
-    this.onClickListItem('AC')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Customer") {
-    this.key = 8
-    this.navigation = "Customer"
-    this.onClickListItem('C')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Supplier") {
-    this.key = 8
-    this.navigation = "Supplier"
-    this.onClickListItem('SUB')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "SuppForex") {
-    this.key = 8
-    this.navigation = "SuppForex"
-    this.onClickListItem('SF')
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "") {
-    this.key = 0
-    this.navigation = "Home"
-    this.onClickListItem('H')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ExpenseDynamic") {
-    this.key = 0
-    this.navigation = "ExpenseDynamic"
-    this.onClickListItem('ED')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Product") {
-    this.key = 0
-    this.navigation = "Product"
-    this.onClickListItem('P')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProductCat") {
-    this.key = 0
-    this.navigation = "ProductCat"
-    this.onClickListItem('PC')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProductGroup") {
-    this.key = 0
-    this.navigation = "ProductGroup"
-    this.onClickListItem('PG')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProductUnit") {
-    this.key = 0
-    this.navigation = "ProductUnit"
-    this.onClickListItem('PU')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProductUnitCon") {
-    this.key = 0
-    this.navigation = "ProductUnitCon"
-    this.onClickListItem('PUC')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "WareHouse") {
-    this.key = 0
-    this.navigation = "WareHouse"
-    this.onClickListItem('W')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Bank") {
-    this.key = 0
-    this.navigation = "Bank"
-    this.onClickListItem('B')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "BankBranch") {
-    this.key = 0
-    this.navigation = "BankBranch"
-    this.onClickListItem('BB')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "BankAccount") {
-    this.key = 0
-    this.navigation = "BankAccount"
-    this.onClickListItem('BA')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Invoice") {
-    this.key = 0
-    this.navigation = "Invoice"
-    this.onClickListItem('I')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "PaymentFromCompany") {
-    this.key = 0
-    this.navigation = "PaymentFromCompany"
-    this.onClickListItem('PFC')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "PaymentToCompany") {
-    this.key = 0
-    this.navigation = "PaymentToCompany"
-    this.onClickListItem('PTC')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProductPricing") {
-    this.key = 0
-    this.navigation = "ProductPricing"
-    this.onClickListItem('PP')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "StockIn") {
-    this.key = 0
-    this.navigation = "StockIn"
-    this.onClickListItem('SI')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "StockMovement") {
-    this.key = 0
-    this.navigation = "StockMovement"
-    this.onClickListItem('SM')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "JournalDynamic") {
-    this.key = 0
-    this.navigation = "JournalDynamic"
-    this.onClickListItem('JD')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ProductStock") {
-    this.key = 0
-    this.navigation = "ProductStock"
-    this.onClickListItem('PS')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "StockMovement") {
-    this.key = 0
-    this.navigation = "StockMovement"
-    this.onClickListItem('SM')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "FinancialReports") {
-    this.key = 0
-    this.navigation = "FinancialReports"
-    this.onClickListItem('FR')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "SalesReports") {
-    this.key = 0
-    this.navigation = "SalesReports"
-    this.onClickListItem('SR')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "PurchaseReports") {
-    this.key = 0
-    this.navigation = "PurchaseReports"
-    this.onClickListItem('PR')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "InventoryReports") {
-    this.key = 0
-    this.navigation = "InventoryReports"
-    this.onClickListItem('IR')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "FinancialReportsPage") {
-    this.key = 0
-    this.navigation = "FinancialReportsPage"
-    this.onClickListItem('FRP')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Cheque") {
-    this.key = 0
-    this.navigation = "Cheque"
-    this.onClickListItem('CTC')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Cheque2") {
-    this.key = 0
-    this.navigation = "Cheque2"
-    this.onClickListItem('CTC2')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "Charts") {
-    this.key = 0
-    this.navigation = "Charts"
-    this.onClickListItem('Charts')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "ECharts") {
-    this.key = 0
-    this.navigation = "ECharts"
-    this.onClickListItem('ECharts')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "FiscalYear") {
-    this.key = 0
-    this.navigation = "FiscalYear"
-    this.onClickListItem('FY')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "AccountOpen") {
-    this.key = 0
-    this.navigation = "AccountOpen"
-    this.onClickListItem('AO')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "StockOpen") {
-    this.key = 0
-    this.navigation = "StockOpen"
-    this.onClickListItem('SO')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "CustOpen") {
-    this.key = 0
-    this.navigation = "CustOpen"
-    this.onClickListItem('CO')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }else if(localStorage.getItem(this._globals.baseAppName + '_nav') == "SuppOpen") {
-    this.key = 0
-    this.navigation = "SuppOpen"
-    this.onClickListItem('SUO')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  } else {
-    this.key = 0
-    this.navigation = "Home"
-    this.onClickListItem('H')
-    localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation)
-  }
-
-//   var header = document.getElementById("myDIV");
-// var btns = header.getElementsByClassName("side_list_item");
-//   var current = document.getElementsByClassName("active");
-//   current[0].className = current[0].className.replace(" active", "");
-//   btns[this.key].className += " active";
-
-  // this._auth.login(this.model);
-  // this._auth.logout();
+  
   localStorage.setItem(this._globals.baseAppName + '_language', this.lang_LS);
   var header = document.getElementById("myDIV");
 var btns = header!.getElementsByClassName("side_list_item");
@@ -418,7 +199,51 @@ for (var i = 0; i < btns.length; i++) {
       : true;
   }
 
-  
+  openPanels(id: number) {
+    if (id == 1) {
+      this.openPanel1 = true
+      this.openPanel2 = false
+      this.openPanel3 = false
+      this.openPanel4 = false
+      this.openPanel5 = false
+      this.openPanel6 = false
+    }else if (id == 2) {
+      this.openPanel1 = false
+      this.openPanel2 = true
+      this.openPanel3 = false
+      this.openPanel4 = false
+      this.openPanel5 = false
+      this.openPanel6 = false
+    }else if (id == 3) {
+      this.openPanel1 = false
+      this.openPanel2 = false
+      this.openPanel3 = true
+      this.openPanel4 = false
+      this.openPanel5 = false
+      this.openPanel6 = false
+    }else if (id == 4) {
+      this.openPanel1 = false
+      this.openPanel2 = false
+      this.openPanel3 = false
+      this.openPanel4 = true
+      this.openPanel5 = false
+      this.openPanel6 = false
+    }else if (id == 5) {
+      this.openPanel1 = false
+      this.openPanel2 = false
+      this.openPanel3 = false
+      this.openPanel4 = false
+      this.openPanel5 = true
+      this.openPanel6 = false
+    }else if (id == 6) {
+      this.openPanel1 = false
+      this.openPanel2 = false
+      this.openPanel3 = false
+      this.openPanel4 = false
+      this.openPanel5 = false
+      this.openPanel6 = true
+    }
+  }
 
   onSignOut() {
     this._auth.logout();
@@ -439,204 +264,30 @@ var btns = header!.getElementsByClassName("side_list_item");
 onToggle() {
   this.break = !this.break
 }
+
+onClickHome() {
+  this.router.navigate(['System/Home']);
+}
   
-  onClickListItem(event: string) {
-    if(event == 'H' ) {
-      this.navigation = "Home"
-      var header = document.getElementById("myDIV");
-      var btns = header!.getElementsByClassName("side_list_item");
-      var current = document.getElementsByClassName("active");
-  current[0].className = current[0].className.replace(" active", "");
-  btns[0].className += " active";
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Home clicked", this.navigation);
-    }else if(event == 'A' ) {
-      this.navigation = "Account"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Account clicked", this.navigation);
-    }else if(event == 'T' ) {
-      this.navigation = "Tax"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Tax clicked", this.navigation);
-    }else if(event == 'F' ) {
-      this.navigation = "Forex"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Forex clicked", this.navigation);
-    }
-    else if(event == 'BP' ) {
-      this.navigation = "BusinessProfile"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Bussiness Profile clicked", this.navigation);
-    }
-    else if(event == 'J' ) {
-      this.navigation = "JournalEntry"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Journal entry clicked", this.navigation);
-    }else if(event == 'SF' ) {
-      this.navigation = "SuppForex"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Journal entry clicked", this.navigation);
-    }else if(event == 'E' ) {
-      this.navigation = "Expense"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'ED' ) {
-      this.navigation = "ExpenseDynamic"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'AC' ) {
-      this.navigation = "AccountConfig"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("AccountConfig entry clicked", this.navigation);
-    }else if(event == 'PEX' ) {
-      this.navigation = "ProExpense"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("AccountConfig entry clicked", this.navigation);
-    }else if(event == 'PIN' ) {
-      this.navigation = "ProInv"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("AccountConfig entry clicked", this.navigation);
-    }else if(event == 'PEXL' ) {
-      this.navigation = "ProExpenseList"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("AccountConfig entry clicked", this.navigation);
-    }else if(event == 'C' ) {
-      this.navigation = "Customer"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'P' ) {
-      this.navigation = "Product"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'SUB' ) {
-      this.navigation = "Supplier"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PC' ) {
-      this.navigation = "ProductCat"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PG' ) {
-      this.navigation = "ProductGroup"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PU' ) {
-      this.navigation = "ProductUnit"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PUC' ) {
-      this.navigation = "ProductUnitCon"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'W' ) {
-      this.navigation = "WareHouse"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'B' ) {
-      this.navigation = "Bank"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'BB' ) {
-      this.navigation = "BankBranch"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'BA' ) {
-      this.navigation = "BankAccount"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'I' ) {
-      this.navigation = "Invoice"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'FY' ) {
-      this.navigation = "FiscalYear"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'AO' ) {
-      this.navigation = "AccountOpen"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'SO' ) {
-      this.navigation = "StockOpen"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'CO' ) {
-      this.navigation = "CustOpen"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'SUO' ) {
-      this.navigation = "SuppOpen"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PFC' ) {
-      this.navigation = "PaymentFromCompany"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PTC' ) {
-      this.navigation = "PaymentToCompany"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PP' ) {
-      this.navigation = "ProductPricing"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'SI' ) {
-      this.navigation = "StockIn"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'SM' ) {
-      this.navigation = "StockMovement"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'JD' ) {
-      this.navigation = "JournalDynamic"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PS' ) {
-      this.navigation = "ProductStock"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'FR' ) {
-      this.navigation = "FinancialReports"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'SR' ) {
-      this.navigation = "SalesReports"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'PR' ) {
-      this.navigation = "PurchaseReports"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'IR' ) {
-      this.navigation = "InventoryReports"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'FRP' ) {
-      this.navigation = "FinancialReportsPage"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'CTC' ) {
-      this.navigation = "Cheque"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'CTC2' ) {
-      this.navigation = "Cheque2"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'Charts' ) {
-      this.navigation = "Charts"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }else if(event == 'ECharts' ) {
-      this.navigation = "ECharts"
-      localStorage.setItem(this._globals.baseAppName + '_nav', this.navigation);
-      console.log("Expense entry clicked", this.navigation);
-    }
-  }
+checkEng(){
+  return (localStorage.getItem(this._globals.baseAppName + '_language') == '16002')
+    
+}
+
+  onChangePassword  () {
+    
+    const dialogRef = this.dialog.open(ChangePasswordNewComponent, {
+      disableClose: true,
+      
+      data: {}
+    });
+  
+  dialogRef.afterClosed().subscribe(() => {});
+};
 
   onChangeLanguage() {
     this.navigation = "Home"
+    this.router.navigate(['System/Home']);
     var header = document.getElementById("myDIV");
     var btns = header!.getElementsByClassName("side_list_item");
       var current = document.getElementsByClassName("active");
@@ -653,6 +304,7 @@ onToggle() {
       this.paymentFromCompany = "Payment to supplier"
       this.paymentToCompany = "Customer payment"
       this.tax = "Tax"
+      this.changePassword = "Change password"
       this.invoice = "POS"
       this.bank = "Bank"
       this.fym = "Financial year management"
@@ -719,6 +371,7 @@ onToggle() {
       this.accountConfiguration = "اعداد الحسابات"
       this.expense = "المصروفات"
       this.tax = "الضرائب"
+      this.changePassword = "تغيير كلمة السر"
       this.customer = "العميل"
       this.forex = "فوركس"
       this.fym = "ادارة السنة المالية"
@@ -770,6 +423,7 @@ onToggle() {
       this.customer = "Customer"
       this.accountConfiguration = "Account Configuration"
       this.tax = "Tax"
+      this.changePassword = "Change password"
       this.fym = "Financial year management"
       this.fiscalYear = "Fiscal year"
       this.accountOpen = "Account opening balance"

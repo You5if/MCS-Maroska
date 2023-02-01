@@ -33,10 +33,18 @@ export class TaxService {
            }
 
         taxEntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'Tax/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'Tax/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         taxEntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'Tax/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'Tax/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
 

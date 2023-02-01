@@ -33,10 +33,18 @@ export class WareHouseEntryService {
            }
 
            wareHouseEntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'WareHouse/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'WareHouse/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         wareHouseEntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'WareHouse/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'WareHouse/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         
 

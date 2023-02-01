@@ -54,8 +54,8 @@ export class PurchaseComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Purchase reports - Pablo");
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+    this.titleService.setTitle("Purchase reports - Maroska");
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.header1 = "Suppliers reports"
       this.header2 = "Purchase invoice reports"
@@ -92,7 +92,7 @@ export class PurchaseComponent implements OnInit {
     restOfUrl = 'supplierid=' + this.customerId; 
     console.log(restOfUrl)
     this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl }); 
-    this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/Reports']);
   }
   onFetch() { 
     const reportId:number = 12
@@ -102,7 +102,7 @@ export class PurchaseComponent implements OnInit {
     restOfUrl = 'invoiceid=' + this.invoiceId; 
     console.log(restOfUrl)
     this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl }); 
-    this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/Reports']);
   }
   onProfile() { 
     const reportId:number = 9
@@ -112,7 +112,7 @@ export class PurchaseComponent implements OnInit {
     restOfUrl = 'supplierid=' + this.customerId; 
     console.log(restOfUrl)
     this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl }); 
-    this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/Reports']);
   }
 
   onChangeCustomer(id: number) {

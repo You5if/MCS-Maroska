@@ -1,6 +1,7 @@
 import { Direction } from '@angular/cdk/bidi';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 // import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DApiSerivce } from 'src/app/api.service';
 import { AppGlobals } from 'src/app/app.global';
@@ -8,6 +9,7 @@ import { SelectService } from 'src/app/components/common/select.service';
 import { FileListModel } from 'src/app/components/common/upload/upload-file.model';
 import { MessageBoxService } from 'src/app/components/messagebox/message-box.service';
 import { SelectModel } from 'src/app/components/misc/SelectModel';
+import { AuthService } from 'src/app/components/security/auth/auth.service';
 import { UIService } from 'src/app/components/shared/uiservices/UI.service';
 import { Sources } from 'src/app/dynamic-form/source.model';
 import { Send } from 'src/app/send.model';
@@ -37,7 +39,7 @@ export class SystemBusinessProfileComponent implements OnInit {
       companyId: 10001,
       branchId: 201,
       financialYearId: 1,
-      userId: 1,
+      userId: Number(this._auth.getUserId()),
       mACAddress: "unidentified",
       hostName: "unidentified",
       iPAddress: "unidentified",
@@ -61,7 +63,7 @@ export class SystemBusinessProfileComponent implements OnInit {
   phoneN: boolean = false;
   data!: Sources[];
   ver!: Sources;
-  imgHttp2:string = "http://pabloapi.autopay-mcs.com/"
+  imgHttp2:string = "http://Maroskaapi.autopay-mcs.com/"
   imgHttp:string = "http://pab"
   maxSize!: number
 
@@ -78,7 +80,14 @@ export class SystemBusinessProfileComponent implements OnInit {
   addNumber!: string;
   dot!: Sources;
 
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
 
   dropItem!: Sources;
   container: any[][] =[];
@@ -96,7 +105,9 @@ export class SystemBusinessProfileComponent implements OnInit {
   constructor( private dapiService: BusinessService,
    private upload: UploadService,
      private _ui: UIService,
+     private _auth: AuthService,
      private _msg: MessageBoxService,
+     private router: Router,
       private _globals: AppGlobals,
       public _nav: SystemNavigationComponent,
       private _select: SelectService,) {}
@@ -240,14 +251,14 @@ handleKeyUp(e:any){
         //  this.refreshMe();
         
         this.visible = false;
-        if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+            if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
           this._msg.showInfo("Message", "Saved succesfully");
           this._nav.onBusiness('Home')
-        this._nav.onClickListItem('H');
+        this.router.navigate(['System/Home']);
         }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
           this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
           this._nav.onBusiness('Home')
-        this._nav.onClickListItem('H');
+        this.router.navigate(['System/Home']);
         }
         
         
@@ -266,7 +277,7 @@ handleKeyUp(e:any){
 
 
       refreshMe() {
-        if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+            if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
           this.direction = "ltr"
           this.submit = "Submit"
           this.addNumber = "Add another phone number"
@@ -279,7 +290,7 @@ handleKeyUp(e:any){
         this.light = [];
         this.dark = [];
         this.dropList= [];
-        if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+            if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
           this.direction = "ltr"
         }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
           this.direction = "rtl"

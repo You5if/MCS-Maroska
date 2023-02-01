@@ -9,6 +9,7 @@ import { AppGlobals } from 'src/app/app.global';
 import { SelectService } from 'src/app/components/common/select.service';
 import { MessageBoxService } from 'src/app/components/messagebox/message-box.service';
 import { SelectModel } from 'src/app/components/misc/SelectModel';
+import { AuthService } from 'src/app/components/security/auth/auth.service';
 import { UIService } from 'src/app/components/shared/uiservices/UI.service';
 import { Sources } from 'src/app/dynamic-form/source.model';
 import { Send } from 'src/app/send.model';
@@ -37,7 +38,7 @@ export class SystemForexComponent implements OnInit {
       companyId: 10001,
       branchId: 201,
       financialYearId: 1,
-      userId: 1,
+      userId: Number(this._auth.getUserId()),
       mACAddress: "unidentified",
       hostName: "unidentified",
       iPAddress: "unidentified",
@@ -71,7 +72,14 @@ export class SystemForexComponent implements OnInit {
   obj2!: Sources;
   dialog_title: string|null = localStorage.getItem(this._globals.baseAppName + '_Add&Edit');
 
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
   minDate!: Date;
   maxDate!:  Date;
 
@@ -89,6 +97,7 @@ export class SystemForexComponent implements OnInit {
      private _ui: UIService,
       private _globals: AppGlobals,
       private _select: SelectService,
+      private _auth: AuthService,
       private _msg: MessageBoxService,
       private dialogRef: MatDialogRef<SystemForexComponent>,
       @Inject(MAT_DIALOG_DATA) public pModel: Send) {}
@@ -98,7 +107,13 @@ export class SystemForexComponent implements OnInit {
     
 
 
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        this.workShimmerBtn = true
+    this.workShimmerHeader = true
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
+    this.workShimmerPaginator = true
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.submit = "Submit"
       this.cancel = "Cancel"
@@ -278,66 +293,44 @@ export class SystemForexComponent implements OnInit {
             console.log('Last:', JSON.stringify(this.last));
            this.dapiService.forexEntryA(this.last).subscribe(nexto => {
              this.res = nexto;
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Saved succesfully");
+                 this._msg.showInfo("Success", this.res.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
-            this.dialogRef.close();
-            }
      
            }, error => {
              console.log(error);
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Error!!");
+                 this._msg.showInfo("Error", error.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              
-              this._msg.showInfo("رسالة", "توجد مشكلة");
-            this.dialogRef.close();
-            }
            });
          }else if(this.last.records[0].entryMode == "E"){
            this.dapiService.forexEntryE(this.last).subscribe(nexto => {
              this.res = nexto;
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Saved succesfully");
+                 this._msg.showInfo("Success", this.res.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
-            this.dialogRef.close();
-            }
      
            }, error => {
              console.log(error);
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Error!!");
+                 this._msg.showInfo("Error", error.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              
-              this._msg.showInfo("رسالة", "توجد مشكلة");
-            this.dialogRef.close();
-            }
            });
          }
         } else {
-          if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+              if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
             if(Object3.value < 1 && this.maxDate>=this.minDate) {
-              this._msg.showInfo("Error!!", "Amount is less than 1");
+              this._msg.showInfo("Error", "Amount is less than 1");
             }else if(Object3.value >= 1 && this.maxDate<this.minDate) {
-              this._msg.showInfo("Error!!", "To date cann't be less than From date");
+              this._msg.showInfo("Error", "To date cann't be less than From date");
             }else if(Object3.value < 1 && this.maxDate<this.minDate) {
-              this._msg.showInfo("Error!!", "Amount is less than 1 and To date cann't be less than From date");
+              this._msg.showInfo("Error", "Amount is less than 1 and To date cann't be less than From date");
             }
             
           this.last.records = []
           }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
             if(Object3.value < 1 && this.maxDate>=this.minDate) {
-              this._msg.showInfo("خطأ!!", "الكمية اقل من واحد");
+              this._msg.showInfo("Error", "الكمية اقل من واحد");
             }else if(Object3.value >= 1 && this.maxDate<this.minDate) {
-              this._msg.showInfo("خطأ!!", "تحقق من التاريخ ");
+              this._msg.showInfo("Error", "تحقق من التاريخ ");
             }else if(Object3.value < 1 && this.maxDate<this.minDate) {
-              this._msg.showInfo("و التار خطأ!!", "تحقق من الكمية و التاريخ");
+              this._msg.showInfo("Error", "تحقق من الكمية و التاريخ");
             }
             
             
@@ -369,7 +362,7 @@ export class SystemForexComponent implements OnInit {
   //          console.log('Last:', JSON.stringify(this.last));
   //         this.dapiService.forexEntryA(this.last).subscribe(nexto => {
   //           this.res = nexto;
-  //           if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+  //               if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
   //            this._msg.showInfo("Message", "Forex saved succesfully");
   //          this.dialogRef.close();
   //          }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
@@ -379,7 +372,7 @@ export class SystemForexComponent implements OnInit {
     
   //         }, error => {
   //           console.log(error);
-  //           if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+  //               if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
   //            this._msg.showInfo("Message", "Error!!");
   //          this.dialogRef.close();
   //          }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
@@ -391,7 +384,7 @@ export class SystemForexComponent implements OnInit {
   //       }else if(this.last.records[0].entryMode == "E"){
   //         this.dapiService.forexEntryE(this.last).subscribe(nexto => {
   //           this.res = nexto;
-  //           if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+  //               if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
   //            this._msg.showInfo("Message", "Forex saved succesfully");
   //          this.dialogRef.close();
   //          }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
@@ -401,7 +394,7 @@ export class SystemForexComponent implements OnInit {
     
   //         }, error => {
   //           console.log(error);
-  //           if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+  //               if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
   //            this._msg.showInfo("Message", "Error!!");
   //          this.dialogRef.close();
   //          }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
@@ -412,7 +405,7 @@ export class SystemForexComponent implements OnInit {
   //         });
   //       }
   //      } else {
-  //        if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+  //            if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
   //          if(Object3.value < 1 && this.maxDate>=this.minDate) {
   //            this._msg.showInfo("Error!!", "Amount is less than 1");
   //          }else if(Object3.value >= 1 && this.maxDate<this.minDate) {

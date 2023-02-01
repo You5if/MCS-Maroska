@@ -105,7 +105,7 @@
       </mat-cell>
     </ng-container>
 
-    <mat-header-row class="headerRow" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <!-- <mat-header-row class="headerRow" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row> -->
 
     <mat-row *matRowDef="let row; columns: displayedColumns;"
       [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="row.highlighted = !row.highlighted"
@@ -113,9 +113,18 @@
 
   </mat-table>
 
+
+<div *ngIf="workShimmerTable" class="item">
+  <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+    'border-radius': '5px',
+    height: '340px',
+    border: '1px solid white'
+  }"></ngx-skeleton-loader>
+</div>
+
 </Section>
 
-<!-- <section [dir]="direction" class="cards_section" fxHide.gt-xs>
+<!-- <section *ngIf="!workShimmerCard" [dir]="direction" class="cards_section" fxHide fxShow.xs>
   <div *ngFor="let index of indexes">
     <mat-card fxLayout class="card">
       <div>
@@ -160,8 +169,17 @@
 
 
 <div class="paginator">
-  <mat-paginator [length]="totalRecords" [pageSize]="recordsPerPage" [pageSizeOptions]="pageSizeOptions"
+  <mat-paginator *ngIf="!workShimmerPaginator" [hidePageSize]="true" [length]="totalRecords" [pageSize]="recordsPerPage" [pageSizeOptions]="pageSizeOptions"
   (page)="paginatoryOperation($event)" showFirstLastButtons>
 </mat-paginator>
 
+
+</div>
+<div *ngIf="workShimmerPaginator" class="itemRow">
+  <ngx-skeleton-loader count="1" appearance="circle" [theme]="{ 
+    'border-radius': '5px',
+    height: '50px',
+    width: '500px',
+    border: '1px solid white'
+  }"></ngx-skeleton-loader>
 </div>

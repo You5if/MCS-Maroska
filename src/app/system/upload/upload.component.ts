@@ -52,7 +52,8 @@ export class UploadProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+    
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.upload= "Upload file"      
     }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       this.upload= "قم برفع صورة"     

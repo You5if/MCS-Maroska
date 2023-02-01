@@ -30,11 +30,19 @@ export class SuppInvProcEntryService {
         }
 
         EntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'SuppInvProc/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'SuppInvProc/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         EntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'SuppInvProc/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'SuppInvProc/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 }
 

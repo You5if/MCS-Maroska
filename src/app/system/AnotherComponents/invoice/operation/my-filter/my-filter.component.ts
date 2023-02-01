@@ -19,7 +19,14 @@ export class MyFilterComponent implements OnInit {
 
   submit!: string;
     cancel!: string;
-    direction!: Direction;
+    workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
+  direction!: Direction;
+  headerToShow: any[] = []
     header!: string;
 
     forDB: string = ""
@@ -51,7 +58,7 @@ export class MyFilterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.submit = "Apply"
       this.cancel = "Cancel"

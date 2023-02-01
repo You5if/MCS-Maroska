@@ -244,7 +244,14 @@ export class PaymentfromEntryComponent implements OnInit {
   showMaxCredit: boolean = false;
   maxCredit!: string;
   
-    direction!: Direction;
+    workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
+  direction!: Direction;
+  headerToShow: any[] = []
     dropListItem1: Sources[] = [];
     dropItemchild1!: Sources;
   
@@ -285,7 +292,7 @@ export class PaymentfromEntryComponent implements OnInit {
 
   ngOnInit() {
     this.showit = false
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
         this.direction = "ltr"
         
         this.submit = "Submit"

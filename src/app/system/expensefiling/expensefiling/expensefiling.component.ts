@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/components/security/auth/auth.service';
 import { ExpenseFilingEntryComponent } from './expensefiling-entry/expensefiling-entry.component';
 import { ExpenseFilingModel } from './expensefiling.model';
 import { RightModel } from 'src/app/components/security/auth/rights.model';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { PageSortComponent } from 'src/app/components/common/pageevents/page-sort/page-sort.component';
 import { ExpenseFilingService } from './expensefiling.service';
 import { SelectModel } from 'src/app/components/misc/SelectModel';
@@ -37,7 +37,7 @@ export class ExpenseFilingComponent implements OnInit {
   currency!:string;
 
     displayedColumns: string[] =
-        ['select','EntryDate', 'expenseCode', 'description', 'amount',  'report'];
+        ['EntryDate', 'expenseCode', 'description', 'amount',  'report'];
 
     dataSource: any;
     isLastPage = false;
@@ -50,7 +50,14 @@ export class ExpenseFilingComponent implements OnInit {
     selection = new SelectionModel<ExpenseFilingModel>(true, []);;
 
     report!: string;
-    direction!: Direction;
+    workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
+  direction!: Direction;
+  headerToShow: any[] = []
     entryDate!: string;
     toAccount!: string;
     description!: string;
@@ -85,6 +92,7 @@ export class ExpenseFilingComponent implements OnInit {
         private alertify: AlertifyService,
         private _globals: AppGlobals,
         private _report: ReportPageService,
+        private router: Router,
         public _nav: SystemNavigationComponent,
         private _select: SelectService,
         private expensefilingservice: ExpenseFilingService,
@@ -101,12 +109,18 @@ export class ExpenseFilingComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.titleService.setTitle("Expenses - Pablo");
+    this.titleService.setTitle("Expenses - Maroska");
       this.refreshMe();
   }
 
   refreshMe() {
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        this.workShimmerBtn = true
+    this.workShimmerHeader = true
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
+    this.workShimmerPaginator = true
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.entryDate = "Date"
       this.toAccount = "To Account"
@@ -134,6 +148,12 @@ export class ExpenseFilingComponent implements OnInit {
     this._cf.getPageData('ExpenseFiling', this.pScreenId, this._auth.getUserId(), this.pTableId,
       this.recordsPerPage, this.currentPageIndex, false).subscribe(
         (result) => {
+          this.workShimmerBtn = false
+          this.workShimmerHeader = false
+    this.workShimmerTable = false
+    this.workShimmerCard = false
+    this.workShimmerCardBtn = false
+    this.workShimmerPaginator = false
           this.totalRecords = result[0].totalRecords;
           this.recordsPerPage = this.recordsPerPage;
           this.dataSource = new MatTableDataSource(result);
@@ -177,28 +197,34 @@ export class ExpenseFilingComponent implements OnInit {
 
     console.log(restOfUrl)
     this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl });
-    this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/Reports']);
   }else {
     this.alertify.error("Not allowed to do such action")
   }
   }
 
   paginatoryOperation(event: PageEvent) {
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
     try {
       this._cf.getPageDataOnPaginatorOperation(event, this.pTableName, this.pScreenId, this._auth.getUserId(),
         this.pTableId, this.totalRecords).subscribe(
           (result: any) => {
-            this._ui.loadingStateChanged.next(false);
+            this.workShimmerTable = false
+    this.workShimmerCard = false
+    this.workShimmerCardBtn = false
+            // this._ui.loadingStateChanged.next(false);
             this.totalRecords = result[0].totalRecords;
             this.recordsPerPage = event.pageSize;
             this.dataSource = result;
           }, error => {
-            this._ui.loadingStateChanged.next(false);
+            // this._ui.loadingStateChanged.next(false);
             this._msg.showAPIError(error);
             return false;
           });
     } catch (error:any) {
-      this._ui.loadingStateChanged.next(false);
+      // this._ui.loadingStateChanged.next(false);
       this._msg.showAPIError(error);
       return false;
     }
@@ -234,7 +260,7 @@ export class ExpenseFilingComponent implements OnInit {
       'readOnly': false
     };
     localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Add");
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Add expense");
     }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "اضافة مصروف");
@@ -259,7 +285,7 @@ export class ExpenseFilingComponent implements OnInit {
       this._ui.loadingStateChanged.next(false);
       result.entryMode = 'E';
       result.readOnly = false;
-      if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+          if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
         localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Edit expense");
       }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
         localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "تعديل مصروف");

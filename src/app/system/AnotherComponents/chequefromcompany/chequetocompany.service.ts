@@ -37,7 +37,10 @@ export class ChequeToCompanyService {
      }
 
      moveToBank(arr: ChequeToCompanyBatchModel){
-      return this.http.post(this._globals.baseAPIUrl + 'ChequeFromCompany/movetobank',arr);
+      return this.http.post(this._globals.baseAPIUrl + 'ChequeFromCompany/movetobank',arr).pipe(
+         map((response: any) => {
+         return response.json();
+         }), catchError(this._cf.handleError));
    }
 
    // Submit the form data to api through this method, (verify the audit column parameters are passed properly before production version is released)

@@ -30,11 +30,19 @@ export class StockPIEntryService {
         }
 
         EntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'StockPI/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'StockPI/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         EntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'StockPI/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'StockPI/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 }
 

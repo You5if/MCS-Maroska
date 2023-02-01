@@ -33,10 +33,18 @@ export class ForexService {
            }
 
         forexEntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'Forex/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'Forex/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         forexEntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'Forex/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'Forex/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
 

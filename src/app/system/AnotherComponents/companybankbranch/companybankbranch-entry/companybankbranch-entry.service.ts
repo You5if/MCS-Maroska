@@ -33,11 +33,19 @@ export class CompanyBankBranchEntryService {
            }
 
         EntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'CompanyBankBranch/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'CompanyBankBranch/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         EntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'CompanyBankBranch/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'CompanyBankBranch/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         
 

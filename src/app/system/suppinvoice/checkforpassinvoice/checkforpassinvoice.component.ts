@@ -26,7 +26,8 @@ export class CheckforpassinvoiceComponent implements OnInit {
   }
 
   onYesClick(): void{
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+    
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       localStorage.setItem(this._globals.baseAppName + '_Add&Edit2', "Add");
       localStorage.setItem(this._globals.baseAppName + '_Add&Edit', "Add Stock");
     }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {

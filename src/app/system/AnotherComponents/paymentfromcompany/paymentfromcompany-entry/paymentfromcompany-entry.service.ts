@@ -35,11 +35,19 @@ export class PaymentFromCompanyEntryService {
            }
 
         EntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'PaymentFromCompany/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'PaymentFromCompany/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         EntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'PaymentFromCompany/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'PaymentFromCompany/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         child1ItemControllers(model: Send) {

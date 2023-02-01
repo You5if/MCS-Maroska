@@ -42,7 +42,7 @@ export class AccountConfigurationEntryComponent implements OnInit {
       companyId: 10001,
       branchId: 201,
       financialYearId: 1,
-      userId: 1,
+      userId: Number(this._auth.getUserId()),
       mACAddress: "unidentified",
       hostName: "unidentified",
       iPAddress: "unidentified",
@@ -75,7 +75,14 @@ export class AccountConfigurationEntryComponent implements OnInit {
   obj1!: Sources;
   obj2!: Sources;
 
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
 
   dropItem!: Sources;
   container: any[][] =[];
@@ -100,7 +107,7 @@ export class AccountConfigurationEntryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
         this.direction = "ltr"
         this.submit = "Submit"
         this.cancel = "Cancel"
@@ -232,46 +239,24 @@ export class AccountConfigurationEntryComponent implements OnInit {
             console.log('Last:', JSON.stringify(this.last));
            this.dapiService.accountConfigEntryA(this.last).subscribe(nexto => {
              this.res = nexto;
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Saved succesfully");
+                 this._msg.showInfo("Success", this.res.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
-            this.dialogRef.close();
-            }
      
            }, error => {
              console.log(error);
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Error!!");
+                 this._msg.showInfo("Error", error.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              
-              this._msg.showInfo("رسالة", "توجد مشكلة");
-            this.dialogRef.close();
-            }
            });
          }else if(this.last.records[0].entryMode == "E"){
            this.dapiService.accountConfigEntryE(this.last).subscribe(nexto => {
              this.res = nexto;
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Saved succesfully");
+                 this._msg.showInfo("Success", this.res.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
-            this.dialogRef.close();
-            }
      
            }, error => {
              console.log(error);
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Error!!");
+                 this._msg.showInfo("Error", error.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              
-              this._msg.showInfo("خطأ!!", "توجد مشكلة");
-            this.dialogRef.close();
-            }
            });
          }
         

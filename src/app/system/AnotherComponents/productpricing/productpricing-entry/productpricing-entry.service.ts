@@ -40,18 +40,34 @@ export class ProductPricingEntryService {
            }
 
         EntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'ProductPricing/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'ProductPricing/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         EntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'ProductPricing/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'ProductPricing/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         EntryA2(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'AdjustPrice/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'AdjustPrice/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         EntryE2(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'AdjustPrice/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'AdjustPrice/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         
 

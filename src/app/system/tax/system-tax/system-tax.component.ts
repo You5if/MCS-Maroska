@@ -7,6 +7,7 @@ import { AppGlobals } from 'src/app/app.global';
 import { SelectService } from 'src/app/components/common/select.service';
 import { MessageBoxService } from 'src/app/components/messagebox/message-box.service';
 import { SelectModel } from 'src/app/components/misc/SelectModel';
+import { AuthService } from 'src/app/components/security/auth/auth.service';
 import { UIService } from 'src/app/components/shared/uiservices/UI.service';
 import { Sources } from 'src/app/dynamic-form/source.model';
 import { Send } from 'src/app/send.model';
@@ -35,7 +36,7 @@ export class SystemTaxComponent implements OnInit {
       companyId: 10001,
       branchId: 201,
       financialYearId: 1,
-      userId: 1,
+      userId: Number(this._auth.getUserId()),
       mACAddress: "unidentified",
       hostName: "unidentified",
       iPAddress: "unidentified",
@@ -68,7 +69,14 @@ export class SystemTaxComponent implements OnInit {
   obj1!: Sources;
   obj2!: Sources;
 
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
 
   dropItem!: Sources;
   container: any[][] =[];
@@ -83,6 +91,7 @@ export class SystemTaxComponent implements OnInit {
   constructor( private dapiService: TaxService,
      private _ui: UIService,
       private _globals: AppGlobals,
+      private _auth: AuthService,
       private _msg: MessageBoxService,
       private _select: SelectService,
       private dialogRef: MatDialogRef<SystemTaxComponent>,
@@ -93,7 +102,13 @@ export class SystemTaxComponent implements OnInit {
     
 
 
-    if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+        this.workShimmerBtn = true
+    this.workShimmerHeader = true
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
+    this.workShimmerPaginator = true
+    if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.submit = "Submit"
       this.cancel = "Cancel"
@@ -228,50 +243,28 @@ export class SystemTaxComponent implements OnInit {
             console.log('Last:', JSON.stringify(this.last));
            this.dapiService.taxEntryA(this.last).subscribe(nexto => {
              this.res = nexto;
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Saved succesfully");
+                 this._msg.showInfo("Success", this.res.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
-            this.dialogRef.close();
-            }
      
            }, error => {
              console.log(error);
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Error!!");
+                 this._msg.showInfo("Error", error.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              
-              this._msg.showInfo("رسالة", "توجد مشكلة");
-            this.dialogRef.close();
-            }
            });
          }else if(this.last.records[0].entryMode == "E"){
            this.dapiService.taxEntryE(this.last).subscribe(nexto => {
              this.res = nexto;
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Saved succesfully");
+                 this._msg.showInfo("Success", this.res.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              this._msg.showInfo("رسالة", "تم الحفظ بنجاح");
-            this.dialogRef.close();
-            }
      
            }, error => {
              console.log(error);
-             if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
-              this._msg.showInfo("Message", "Error!!");
+                 this._msg.showInfo("Error", error.errorMessage);
             this.dialogRef.close();
-            }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
-              
-              this._msg.showInfo("خطأ!!", "توجد مشكلة");
-            this.dialogRef.close();
-            }
            });
          }
         } else {
-          if(localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
+              if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
             this._msg.showInfo("Error!!", "Amount is less than 1");
           this.last.records = []
           }else if(localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {

@@ -88,21 +88,21 @@ export class ChequeToCompanyEntryComponent implements OnInit {
           this._myService.getChequeToCompanySubmit(form)!.subscribe((result: APIResultModel) => {
               if (result.errorNo === 0) {
                   this._ui.loadingStateChanged.next(false);
-                  this._msg.showInfo('message',result.errorMessage);
+                  this._msg.showInfo("Success", result.errorMessage);
                   this.dialogRef.close();
               } else {
                   this._ui.loadingStateChanged.next(false);
-                  this._msg.showError(result.errorMessage);
+                  this._msg.showInfo("Error", result.errorMessage);
                   return false;
               }
           }, error => {
               this._ui.loadingStateChanged.next(false);
-              this._msg.showAPIError(error);
+              this._msg.showInfo("Error", error.errorMessage);
               return false;
             });
       } catch (error:any) {
           this._ui.loadingStateChanged.next(false);
-          this._msg.showAPIError(error);
+          this._msg.showInfo("Error",error.errorMessage);
           return false;
       }
   };

@@ -33,11 +33,19 @@ export class ProductEntryService {
            }
 
         productEntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'Product/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'Product/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         productEntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'Product/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'Product/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         
 

@@ -8,14 +8,15 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import {MAT_DIALOG_DATA,MatDialogRef} from "@angular/material/dialog";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { JwtModule } from "@auth0/angular-jwt";
+import { JwtModule } from "@auth0/angular-jwt"; 
 import { HttpModule } from "@angular/http";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule } from "@angular/flex-layout"; 
 import { DatePipe } from "@angular/common";
 import { MaterialModule } from "src/app/material.module";
 import { MenuItemComponent } from "./components/dynamic/menu/menu-item/menu-item.component";
@@ -280,6 +281,12 @@ import { CheckforstateCompComponent } from "./system/AnotherComponents/paymentto
 import { CheckforsubmitComponent } from "./system/AnotherComponents/paymenttocompany/submitcheck/checkfordelete.component";
 import { CheckforstateComponent } from "./system/journalentry/operation/statecheck/checkfordelete.component";
 import { MyTestAutoComponent } from "./system/my-test-auto/my-test-auto.component";
+import { ChangePasswordNewComponent } from "./system/change-password/change-password.component";
+import { PaymentfromComponent } from "./system/AnotherComponents/paymentfrom/paymenttocompany.component";
+import { PaymentfromEntryComponent } from "./system/AnotherComponents/paymentfrom/paymenttocompany-entry/paymenttocompany-entry.component";
+import { CustomMatExpansionToggleDirective } from "./system/system-navigation/expansion-panel";
+import { SnackbarComponent } from "./components/snackbar/snackbar.component";
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/material/snack-bar";
 
 
 
@@ -329,12 +336,14 @@ export const jwtConfig = {
   
   declarations: [
     AppComponent,
+    PaymentfromEntryComponent,
     // NotActivatiedComponent,
     NotActivatedComponent,
     AccountActivatedComponent,
     RegistrationExpiredComponent,
     ChangePasswordComponent,
     ChangePasswordAnonComponent,
+    ChangePasswordNewComponent,
     DashboardComponent,
     ErrorBoxComponent,
     ErrorApiBoxComponent,
@@ -496,6 +505,7 @@ export const jwtConfig = {
     PaymentFromCompanyComponent,
     PaymentFromCompanyEntryComponent,
     PaymentToCompanyComponent,
+    PaymentfromComponent,
     PaymentToCompanyEntryComponent,
     ProductPricingComponent,
     ProductPricingEntryComponent,
@@ -557,6 +567,8 @@ export const jwtConfig = {
     ChequeFromCompanyEntryComponent,
     Checkforpass2Component,
     MyTestAutoComponent,
+    CustomMatExpansionToggleDirective,
+    SnackbarComponent,
     
 
 
@@ -565,6 +577,7 @@ export const jwtConfig = {
     
   ],
   imports: [
+    NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' }),
     SocialLoginModule.initialize(config),
     BrowserModule,
     BrowserAnimationsModule,
@@ -591,6 +604,7 @@ export const jwtConfig = {
     
   ],
   providers: [
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 6000}},
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -735,7 +749,12 @@ export const jwtConfig = {
     Movetobank2Component,
     ChequeFromCompanyEntryComponent,
     Checkforpass2Component,
-    MyTestAutoComponent
+    MyTestAutoComponent,
+    ChangePasswordNewComponent,
+    CustomMatExpansionToggleDirective,
+    SnackbarComponent,
   ]
 })
 export class AppModule {}
+
+

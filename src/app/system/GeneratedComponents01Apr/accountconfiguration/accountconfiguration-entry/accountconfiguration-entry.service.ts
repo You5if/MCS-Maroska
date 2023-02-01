@@ -33,11 +33,19 @@ export class AccountConfigService {
            }
 
         accountConfigEntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'AccountConfiguration/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'AccountConfiguration/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         accountConfigEntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'AccountConfiguration/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'AccountConfiguration/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
         
 

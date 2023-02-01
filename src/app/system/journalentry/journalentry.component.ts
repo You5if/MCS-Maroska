@@ -34,8 +34,15 @@ import { MyFilterComponent } from '../AnotherComponents/invoice/operation/my-fil
 
 export class JournalEntryComponent implements OnInit {
 
-  indexes!: any[]
+  workShimmerBtn: boolean;
+  workShimmerTable: boolean;
+  workShimmerCard: boolean;
+  workShimmerPaginator: boolean;
+  workShimmerHeader:boolean;
+  workShimmerCardBtn: boolean;
   direction!: Direction;
+  headerToShow: any[] = []
+  indexes!: any[]
   entryDate!: string;
   debitacc!: string;
   creditacc!: string;
@@ -47,7 +54,7 @@ export class JournalEntryComponent implements OnInit {
   opC: boolean = true
 
   displayedColumns: string[] =
-    ['select', 'code', 'EntryDate', 'amount', 'currency', 'report'];
+    [ 'code', 'EntryDate', 'amount', 'currency', 'report'];
 
   dataSource: any;
   isLastPage = false;
@@ -104,7 +111,7 @@ export class JournalEntryComponent implements OnInit {
     this.recordsPerPage = 10;
     this.currentPageIndex = 1;
     this.menuId = 1019106011;
-    this.titleService.setTitle("Journals - Pablo");
+    this.titleService.setTitle("Journals - Maroska");
   }
 
   ngOnInit() {
@@ -122,6 +129,12 @@ export class JournalEntryComponent implements OnInit {
   }
 
   refreshMe() {
+    this.workShimmerBtn = true
+    this.workShimmerHeader = true
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
+    this.workShimmerPaginator = true
     if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
       this.direction = "ltr"
       this.entryDate = "Date"
@@ -135,6 +148,8 @@ export class JournalEntryComponent implements OnInit {
       this.ref = " Reference"
       this.edit = "Edit"
       this.header = "Journals"
+      this.headerToShow = [this.code, this.entryDate,this.ref, this.debitacc, this.amount, this.creditacc, this.currency]
+
     } else if (localStorage.getItem(this._globals.baseAppName + '_language') == "16002") {
       this.direction = "rtl"
       this.entryDate = "التاريخ"
@@ -148,14 +163,22 @@ export class JournalEntryComponent implements OnInit {
       this.currency = "العملة"
       this.edit = "تعديل"
       this.header = "السجلات"
+      this.headerToShow = [this.code, this.entryDate,this.ref, this.debitacc, this.amount, this.creditacc, this.currency]
+
     }
 
     this.pageData.sort = this._cf.sortVar
     this.pageData.filter = this._cf.filterVar
 
-    this._ui.loadingStateChanged.next(true);
+    // this._ui.loadingStateChanged.next(true);
     this._cf.newGetPageData(this.pTableName, this.pageData).subscribe((result) => {
-      this._ui.loadingStateChanged.next(false);
+      // this._ui.loadingStateChanged.next(false);
+      this.workShimmerBtn = false
+          this.workShimmerHeader = false
+    this.workShimmerTable = false
+    this.workShimmerCard = false
+    this.workShimmerCardBtn = false
+    this.workShimmerPaginator = false
       this.totalRecords = result[0].totalRecords;
       this.recordsPerPage = this.recordsPerPage;
       this.dataSource = new MatTableDataSource(result);
@@ -261,10 +284,10 @@ export class JournalEntryComponent implements OnInit {
       let stateModel = {
         statusId: id
       }
-      this._ui.loadingStateChanged.next(true);
+      // this._ui.loadingStateChanged.next(true);
       this.opC = false
       this.openState(stateModel);
-      this._ui.loadingStateChanged.next(false);
+      // this._ui.loadingStateChanged.next(false);
     }
 
   };
@@ -297,7 +320,7 @@ export class JournalEntryComponent implements OnInit {
 
     console.log(restOfUrl)
     this._report.passReportData({ reportId: reportId, restOfUrl: restOfUrl });
-    // this._nav.onClickListItem('FRP');
+    this.router.navigate(['System/Reports']);
     this.router.navigate(['/System/FinancialReportsPage']);
   }
 
@@ -306,6 +329,9 @@ export class JournalEntryComponent implements OnInit {
   }
 
   paginatoryOperation(event: PageEvent) {
+    this.workShimmerTable = true
+    this.workShimmerCard = true
+    this.workShimmerCardBtn = true
     try {
       this.pageData.sort = this._cf.sortVar
       this.pageData.filter = this._cf.filterVar
@@ -315,29 +341,32 @@ export class JournalEntryComponent implements OnInit {
         this.pageData.sort,
         this.pageData.filter).subscribe(
           (result: any) => {
-            this._ui.loadingStateChanged.next(false);
+            this.workShimmerTable = false
+    this.workShimmerCard = false
+    this.workShimmerCardBtn = false
+            // this._ui.loadingStateChanged.next(false);
             this.totalRecords = result[0].totalRecords;
             this.recordsPerPage = event.pageSize;
             this.dataSource = result;
           }, error => {
-            this._ui.loadingStateChanged.next(false);
+            // this._ui.loadingStateChanged.next(false);
             this._msg.showAPIError(error);
             return false;
           });
       // this._cf.getPageDataOnPaginatorOperation(event, this.pTableName, this.pScreenId, this._auth.getUserId(),
       //   this.pTableId, this.totalRecords).subscribe(
       //     (result: JournalEntryModel) => {
-      //       this._ui.loadingStateChanged.next(false);
+            // this._ui.loadingStateChanged.next(false);
       //       this.totalRecords = result[0].totalRecords;
       //       this.recordsPerPage = event.pageSize;
       //       this.dataSource = result;
       //     }, error => {
-      //       this._ui.loadingStateChanged.next(false);
+            // this._ui.loadingStateChanged.next(false);
       //       this._msg.showAPIError(error);
       //       return false;
       //     });
     } catch (error: any) {
-      this._ui.loadingStateChanged.next(false);
+      // this._ui.loadingStateChanged.next(false);
       this._msg.showAPIError(error);
       return false;
     }
@@ -376,9 +405,9 @@ export class JournalEntryComponent implements OnInit {
   };
 
   onView = (id: number) => {
-    this._ui.loadingStateChanged.next(true);
+    // this._ui.loadingStateChanged.next(true);
     this.journalentryservice.getJournalEntryEntry(id).subscribe((result: JournalEntryModel) => {
-      this._ui.loadingStateChanged.next(false);
+      // this._ui.loadingStateChanged.next(false);
       result.entryMode = 'V';
       result.readOnly = true;
       this.openEntry(result);
@@ -388,9 +417,9 @@ export class JournalEntryComponent implements OnInit {
   onEdit = (id: number, rState: number) => {
     if (rState != 2203) {
       if (this.opC == true) {
-        this._ui.loadingStateChanged.next(true);
+        // this._ui.loadingStateChanged.next(true);
         this.journalentryservice.getJournalEntryEntry(id).subscribe((result: JournalEntryModel) => {
-          this._ui.loadingStateChanged.next(false);
+          // this._ui.loadingStateChanged.next(false);
           result.entryMode = 'E';
           result.readOnly = false;
           if (localStorage.getItem(this._globals.baseAppName + '_language') == "16001") {
@@ -401,7 +430,7 @@ export class JournalEntryComponent implements OnInit {
           this.openEntry(result);
         });
       } else {
-        this._ui.loadingStateChanged.next(false);
+        // this._ui.loadingStateChanged.next(false);
         this.opC = true
       }
     } else {

@@ -30,11 +30,19 @@ export class ProcExpenseEntryService {
         }
 
         EntryA(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'ProcExpense/createuniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'ProcExpense/createuniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 
         EntryE(arr: any){
-           return this.http.post(this._globals.baseAPIUrl + 'ProcExpense/edituniv',arr);
+           return this.http.post(this._globals.baseAPIUrl + 'ProcExpense/edituniv',arr).pipe(
+            map((response: any) => {
+                console.log('here: ', response.json());
+            return response.json();
+            }), catchError(this._cf.handleError));
         }
 }
 
